@@ -50,10 +50,13 @@ WCAG AA contrast (cream text on charcoal, chili red reserved for large/bold elem
 
 ## Concrete direction
 
-- **Palette** (Tailwind v4 `@theme` tokens): `--color-bg` charcoal black (#12100E), `--color-ink` warm cream (#F5EDE1), `--color-accent` chili red (#D7301F), `--color-accent-2` warm gold (#E8A33D), `--color-support` jade (#2F5C4C, sparing use), `--color-surface` deep marble gray (#1C1917).
-- **Typography**: display — a bold condensed Google variable font (Big Shoulders or Anton-style) for headlines, echoing FN's spray-paint branding; body — a clean geometric sans (Plus Jakarta Sans) for menu/copy. Never Inter-only.
-- **Signature interaction**: steam wisps rising off the hero noodle bowl, subtly cursor-reactive (canvas), degrades to a gentle static loop under `prefers-reduced-motion`.
-- **Sections**: Nav (logo, links, Order CTA) → Hero (bowl + steam + tagline) → Story (Mr Nang + FN team) → Menu (Noodle Bowls / Mains / Appetizers, real prices, "ask in-store" flagged where unposted) → Order (mock cart → WhatsApp handoff) → Location & Hours → Footer (socials as Tabler icons).
+Revised after the client shared a reference build (fresh-noodles.lovable.app) as the target look — that reference uses placeholder menu items (ramen, bao buns), fabricated branches, and a fake star rating (its own footer admits "Demo site · Not the official website"). We matched its visual system exactly but kept FN's real menu, prices, single real location, and real photos rather than copying its invented content.
+
+- **Palette** (Tailwind v4 `@theme` tokens, oklch): `--color-bg` oklch(14% .02 30), `--color-surface` oklch(19% .025 30), `--color-ink` oklch(98% .01 80), `--color-muted` oklch(72% .02 80), `--color-accent` oklch(66% .22 32) chili red, `--color-gold` oklch(75% .19 65).
+- **Typography**: display — Bebas Neue (condensed, all-caps) for headlines; body — Inter. Matches the reference exactly.
+- **Photo strategy**: real dish photos, but the source images are compilation shots from FN's Facebook posts with baked-in marketing text — every image used on-site is pre-cropped (via PIL, see git history) to an honest, text-free region that actually matches the labeled dish. No image is used as a stand-in for a dish it doesn't show.
+- **Sections**: Nav (logo, links, Order Now → opens cart) → Hero (headline + real bowl photo + honest stat row) → Menu (featured photo tiles for every item with a real matching photo, plain list for the rest, real prices, "Ask in-store" flagged where unposted) → full-bleed banner photo break → Story (stat cards + Mr Nang/FN team photos) → Visit (real Sunset Compound address/hours/Maps link + Order & Follow) → Footer.
+- Dropped from the original direction: the canvas steam effect and jade support color (not in the matched reference); kept the WhatsApp mock-cart ordering flow since it's a genuine functional upgrade over the reference's plain anchor-link button.
 
 ## Known placeholders (flagged for the owner to correct)
 

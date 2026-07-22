@@ -1,20 +1,20 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg: #14110d;
-  --color-surface: #1e1a15;
-  --color-surface-2: #262019;
-  --color-ink: #f5ede1;
-  --color-muted: #b8ab97;
-  --color-accent: #d7301f;
-  --color-accent-ink: #fbf1e6;
-  --color-gold: #e8a33d;
-  --color-gold-ink: #14110d;
-  --color-jade: #2f5c4c;
-  --color-line: rgb(245 237 225 / 0.12);
+  --color-bg: oklch(14% 0.02 30);
+  --color-surface: oklch(19% 0.025 30);
+  --color-surface-2: oklch(24% 0.02 30);
+  --color-ink: oklch(98% 0.01 80);
+  --color-muted: oklch(72% 0.02 80);
+  --color-accent: oklch(66% 0.22 32);
+  --color-accent-2: oklch(55% 0.24 28);
+  --color-accent-ink: oklch(99% 0 0);
+  --color-gold: oklch(75% 0.19 65);
+  --color-gold-ink: oklch(14% 0.02 30);
+  --color-line: oklch(28% 0.02 30);
 
-  --font-display: var(--font-anton), "Impact", sans-serif;
-  --font-sans: var(--font-jakarta), "Helvetica Neue", Arial, sans-serif;
+  --font-display: var(--font-bebas), "Impact", sans-serif;
+  --font-sans: var(--font-inter), "Helvetica Neue", Arial, sans-serif;
 
   --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-in-out-strong: cubic-bezier(0.77, 0, 0.175, 1);

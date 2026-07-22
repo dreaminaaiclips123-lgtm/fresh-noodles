@@ -1,72 +1,89 @@
+import Image from "next/image";
 import Link from "next/link";
-import { IconArrowDown, IconBrandWhatsapp } from "@tabler/icons-react";
-import HeroSteam from "./HeroSteam";
-import BowlMark from "./BowlMark";
+import { IconArrowRight, IconBrandWhatsapp } from "@tabler/icons-react";
 import { SITE } from "@/lib/site";
-
-const WORDS = [
-  "FRESH NOODLES",
-  "BOLD FLAVORS",
-  "MADE FOR YOU",
-  "ASIA CLOSER THAN EVER",
-];
 
 export default function Hero() {
   return (
-    <section className="relative overflow-hidden">
-      <div className="relative flex min-h-[100dvh] flex-col justify-center px-5 pb-20 pt-32 sm:px-10">
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[60vh]">
-          <BowlMark className="absolute bottom-[-4rem] left-1/2 w-[min(120vw,900px)] -translate-x-1/2 opacity-90" />
-          <HeroSteam />
-        </div>
-
-        <div className="relative">
-          <p className="text-sm font-bold uppercase tracking-[0.3em] text-gold">
-            Korean &amp; Chinese Fusion · Sunset Compound, Cairo
+    <section className="relative overflow-hidden px-5 pb-20 pt-40 sm:px-10 sm:pt-48">
+      <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
+        <div>
+          <p className="flex items-center gap-3 text-sm font-bold uppercase tracking-[0.3em] text-gold">
+            <span className="h-px w-6 bg-gold" aria-hidden />
+            Korean &amp; Chinese Fusion · Sunset Compound
           </p>
-          <h1 className="font-display mt-4 text-[clamp(3rem,12vw,7.5rem)] leading-[0.92] tracking-wide text-ink">
-            ASIA
+          <h1 className="font-display mt-5 text-[clamp(3rem,8vw,5.5rem)] leading-[0.92] tracking-wide text-ink">
+            Noodles so <span className="text-accent">fresh</span>,
             <br />
-            CLOSER
-            <br />
-            <span className="text-accent">THAN EVER</span>
+            you&apos;ll slurp <span className="italic text-gold">twice.</span>
           </h1>
-          <p className="mt-6 max-w-lg text-lg font-medium leading-relaxed text-muted sm:text-xl">
-            Fresh noodles, wok-fired mains and crispy appetizers — made to
+          <p className="mt-6 max-w-md text-lg leading-relaxed text-muted">
+            Fresh noodles, wok-fired mains and crispy appetizers — tossed to
             order and sent straight to your door in Sunset Compound.
           </p>
 
           <div className="mt-9 flex flex-wrap items-center gap-4">
             <Link
               href="/#menu"
-              className="pressable inline-flex items-center gap-3 rounded-full bg-accent px-7 py-3.5 text-base font-bold text-accent-ink"
+              className="pressable inline-flex items-center gap-2 rounded-full bg-accent px-7 py-3.5 text-base font-bold text-accent-ink"
             >
-              See the menu
-              <IconArrowDown aria-hidden className="h-5 w-5" stroke={2.75} />
+              See the Menu
             </Link>
             <a
               href={`https://wa.me/${SITE.whatsappNumber}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="pressable inline-flex items-center gap-3 rounded-full border border-line px-7 py-3.5 text-base font-bold text-ink hover:border-gold"
+              className="pressable inline-flex items-center gap-2 rounded-full border border-line px-7 py-3.5 text-base font-bold text-ink hover:border-gold"
             >
               <IconBrandWhatsapp aria-hidden className="h-5 w-5" />
               Order on WhatsApp
             </a>
           </div>
-        </div>
-      </div>
 
-      <div className="relative border-y border-line bg-surface py-3">
-        <div className="marquee-track flex w-max gap-10 whitespace-nowrap">
-          {[...WORDS, ...WORDS, ...WORDS].map((w, i) => (
-            <span
-              key={i}
-              className="font-display text-sm tracking-[0.25em] text-muted"
-            >
-              {w} ·
-            </span>
-          ))}
+          <div className="mt-12 flex flex-wrap items-center gap-8">
+            <div>
+              <p className="font-display text-3xl text-ink">Korean × Chinese</p>
+              <p className="text-sm text-muted">Fusion menu</p>
+            </div>
+            <div className="h-10 w-px bg-line" aria-hidden />
+            <div>
+              <p className="font-display text-3xl text-ink">Grand Opening</p>
+              <p className="text-sm text-muted">20% off this month</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="relative">
+          <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[2rem] border border-line">
+            <Image
+              src="/menu/hero-bowls.jpg"
+              alt="Fresh Noodles' Beef Bulgogi and Chicken Noodles bowls"
+              fill
+              priority
+              className="object-cover"
+              sizes="(max-width: 1024px) 90vw, 45vw"
+            />
+          </div>
+          <div className="absolute -bottom-6 -left-6 flex items-center gap-3 rounded-2xl border border-line bg-surface px-4 py-3 shadow-xl">
+            <Image
+              src="/brand/logo.jpg"
+              alt=""
+              width={44}
+              height={44}
+              className="h-11 w-11 rounded-full border border-line"
+            />
+            <div>
+              <p className="font-display text-sm tracking-wide text-ink">
+                FRESH NOODLES
+              </p>
+              <Link
+                href="/#visit"
+                className="flex items-center gap-1 text-xs font-semibold text-gold"
+              >
+                Find us <IconArrowRight size={12} aria-hidden />
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </section>

@@ -1,20 +1,20 @@
 import type { Metadata } from "next";
-import { Anton, Plus_Jakarta_Sans } from "next/font/google";
+import { Bebas_Neue, Inter } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import { CartProvider } from "@/components/CartProvider";
 import CartDrawer from "@/components/CartDrawer";
 
-const anton = Anton({
-  variable: "--font-anton",
+const bebas = Bebas_Neue({
+  variable: "--font-bebas",
   subsets: ["latin"],
   weight: "400",
   display: "swap",
 });
 
-const jakarta = Plus_Jakarta_Sans({
-  variable: "--font-jakarta",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
   display: "swap",
 });
@@ -41,7 +41,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${anton.variable} ${jakarta.variable}`}>
+    <html lang="en" className={`${bebas.variable} ${inter.variable}`}>
       <body className="grain antialiased">
         <CartProvider>
           <Nav />

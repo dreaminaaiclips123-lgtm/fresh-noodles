@@ -1,13 +1,17 @@
 import Hero from "@/components/Hero";
-import Story from "@/components/Story";
 import MenuSection from "@/components/MenuSection";
+import BannerBreak from "@/components/BannerBreak";
+import Story from "@/components/Story";
+import Visit from "@/components/Visit";
 
 export default function Home() {
   return (
     <>
       <Hero />
-      <Story />
       <MenuSection />
+      <BannerBreak />
+      <Story />
+      <Visit />
     </>
   );
 }
