@@ -1,26 +1,181 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-bg: #14110d;
+  --color-surface: #1e1a15;
+  --color-surface-2: #262019;
+  --color-ink: #f5ede1;
+  --color-muted: #b8ab97;
+  --color-accent: #d7301f;
+  --color-accent-ink: #fbf1e6;
+  --color-gold: #e8a33d;
+  --color-gold-ink: #14110d;
+  --color-jade: #2f5c4c;
+  --color-line: rgb(245 237 225 / 0.12);
+
+  --font-display: var(--font-anton), "Impact", sans-serif;
+  --font-sans: var(--font-jakarta), "Helvetica Neue", Arial, sans-serif;
+
+  --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out-strong: cubic-bezier(0.77, 0, 0.175, 1);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+::selection {
+  background: var(--color-accent);
+  color: var(--color-accent-ink);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Charcoal grain: a fixed, low-opacity noise layer so flat dark sections
+   never read as a flat digital fill. */
+.grain::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------- Scroll reveal ---------- */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 700ms var(--ease-out-strong),
+    transform 700ms var(--ease-out-strong);
+  transition-delay: var(--d, 0ms);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---------- Tactile press feedback ---------- */
+
+.pressable {
+  transition: transform 160ms var(--ease-out-strong);
+}
+
+.pressable:active {
+  transform: scale(0.96);
+}
+
+/* ---------- Menu card hover: slight lift + accent border glow ---------- */
+
+.menu-card {
+  transition:
+    transform 400ms var(--ease-out-strong),
+    border-color 400ms var(--ease-out-strong);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .menu-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--color-gold);
+  }
+}
+
+/* ---------- Accent underline sweep ---------- */
+
+.sweep-link {
+  position: relative;
+}
+
+.sweep-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  height: 2px;
+  width: 100%;
+  background: var(--color-gold);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 300ms var(--ease-out-strong);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .sweep-link:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
+
+/* ---------- Sizzle marquee ---------- */
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-track {
+  animation: marquee 28s linear infinite;
+}
+
+/* ---------- Order tray badge ping ---------- */
+
+@keyframes badge-pop {
+  0% {
+    transform: scale(0.6);
+  }
+  60% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.badge-pop {
+  animation: badge-pop 320ms var(--ease-out-strong);
+}
+
+/* ---------- Reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal {
+    transform: none;
+    transition: opacity 300ms ease-out;
+  }
+
+  .menu-card,
+  .sweep-link::after,
+  .pressable {
+    transition: none;
+  }
+
+  .marquee-track,
+  .badge-pop {
+    animation: none;
+  }
 }
