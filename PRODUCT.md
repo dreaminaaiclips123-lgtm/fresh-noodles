@@ -14,7 +14,7 @@ Hungry locals near Agora Mall or Arabella Plaza in New Cairo, browsing on their 
 
 ## Product Purpose
 
-The live site for Fresh Noodles (FN), a Korean/Chinese-fusion noodle concept with two branches in New Cairo (Agora Mall, Arabella Plaza). It exists to make a visitor hungry within one scroll and get them to order — via a cart that hands off to WhatsApp, or a direct call. Success is a visitor building an order and hitting "Send to WhatsApp."
+The live site for Fresh Noodles (FN), an Asian-fusion noodle concept with two branches in New Cairo (Agora Mall, Arabella Plaza). It exists to make a visitor hungry within one scroll and get them to order — via a cart that hands off to WhatsApp, or a direct call. Success is a visitor building an order and hitting "Send to WhatsApp."
 
 ## Positioning
 
@@ -54,13 +54,12 @@ Revised after the client shared a reference build (fresh-noodles.lovable.app) as
 
 - **Palette** (Tailwind v4 `@theme` tokens, oklch): `--color-bg` oklch(14% .02 30), `--color-surface` oklch(19% .025 30), `--color-ink` oklch(98% .01 80), `--color-muted` oklch(72% .02 80), `--color-accent` oklch(66% .22 32) chili red, `--color-gold` oklch(75% .19 65).
 - **Typography**: display — Bebas Neue (condensed, all-caps) for headlines; body — Inter.
-- **Photo strategy**: real dish photos, but the source images are compilation shots from FN's Facebook posts with baked-in marketing text — every image used on-site is pre-cropped (via PIL, see git history) to an honest, text-free region that actually matches the labeled dish. No image is used as a stand-in for a dish it doesn't show.
-- **Sections**: Nav (logo, links, Order Now → /order page) → Hero (headline + real bowl photo + honest stat row) → Menu (featured photo tiles for every item with a real matching photo, plain list for the rest, real prices, "Ask in-store" flagged where unposted) → full-bleed banner photo break → Story (stat cards + FN team photo) → Visit (Agora Mall + Arabella Plaza branch cards + Order & Follow) → Footer.
-- **/order page**: dedicated ordering flow — full menu as a text list (no photos, per owner request), add-to-cart, then checkout via WhatsApp handoff or a direct call link.
+- **Photo strategy**: real dish photos sourced from FN's own Talabat listing (talabat.com/egypt/restaurant/775136/fresh-nodles) — their live ordering menu — pulled at full resolution (up to 1200px) rather than the lower-res Facebook crops used earlier. A couple had a faint Talabat watermark or an FN banner bleeding into frame; those are cropped out. No image is used as a stand-in for a dish it doesn't show.
+- **Menu data**: the full catalog (7 categories, ~30 dishes) and every price is sourced directly from Talabat — the restaurant's real, current, live-ordering menu — not the earlier Facebook-post guesses. Talabat lists a second, discounted price as a platform-specific delivery promo; the site shows the regular (non-discounted) price since it sells direct. One item, Sweet & Sour Chicken Bundle, has a real choice of side (rice or noodles) per its own listing — implemented as a selector that carries through to the cart and WhatsApp message.
+- **Sections**: Nav (logo, links, Order Now → /order page) → Hero (headline + real bowl photo + honest stat row) → Menu (featured photo tiles for every item with a real matching photo, plain list for the rest, real prices) → full-bleed banner photo break → Story (stat cards + FN team photo) → Visit (Agora Mall + Arabella Plaza branch cards + Order & Follow) → Footer.
+- **/order page**: dedicated ordering flow — full menu as a text list (no photos, per owner request), add-to-cart with the rice/noodles selector where applicable, then checkout via WhatsApp handoff or a direct call link.
 
 ## Known placeholders (flagged for the owner to correct)
 
-- Beef Bulgogi / Chicken Noodles bowls: no posted price — marked "ask in-store" until confirmed.
-- Appetizers (spring rolls, dumplings, wings): no posted prices — marked "ask in-store" until confirmed.
 - Hours: no posted schedule per branch — using a plausible delivery-hours placeholder (12pm–1am daily) for both Agora Mall and Arabella Plaza, flagged for correction.
 - Branch addresses: only mall name + New Cairo confirmed — exact street address/unit not posted, so Maps links search by name rather than a precise pin.

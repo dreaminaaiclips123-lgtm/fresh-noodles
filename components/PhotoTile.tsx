@@ -32,7 +32,6 @@ export default function PhotoTile({ item }: { item: MenuItem }) {
 
       <div className="px-5 pb-2">
         <h3 className="text-lg font-semibold text-ink">{item.name}</h3>
-        {item.nameKr && <span className="text-sm text-muted">{item.nameKr}</span>}
         <p className="mt-1 text-sm leading-relaxed text-muted">{item.description}</p>
       </div>
 

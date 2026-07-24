@@ -25,11 +25,11 @@ export const metadata: Metadata = {
     template: "%s | Fresh Noodles",
   },
   description:
-    "Fresh Noodles (FN) — Korean & Chinese fusion noodles, wok mains and appetizers, made fresh at Agora Mall and Arabella Plaza, New Cairo. Order for delivery.",
+    "Fresh Noodles (FN) — Asian fusion noodles, wok mains and appetizers, made fresh at Agora Mall and Arabella Plaza, New Cairo. Order for delivery.",
   openGraph: {
     title: "Fresh Noodles | Asia Closer Than Ever",
     description:
-      "Korean & Chinese fusion noodles and wok mains, made fresh in New Cairo.",
+      "Asian fusion noodles and wok mains, made fresh in New Cairo.",
     type: "website",
   },
 };

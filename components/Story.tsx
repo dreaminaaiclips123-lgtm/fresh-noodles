@@ -2,7 +2,7 @@ import Image from "next/image";
 import Reveal from "./Reveal";
 
 const STATS = [
-  { value: "Korean ×", label: "Chinese fusion" },
+  { value: "Asian", label: "Fusion menu" },
   { value: "Tossed", label: "To order" },
   { value: "Grand", label: "Opening special" },
 ] as const;
@@ -19,9 +19,9 @@ export default function Story() {
             One team, one passion, one bowl at a time.
           </h2>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
-            Fresh Noodles started with a simple idea: bring the Korean and
-            Chinese flavors of a real night market to New Cairo — bold
-            sauces, real spice, nothing frozen longer than it has to be.
+            Fresh Noodles started with a simple idea: bring the flavors of a
+            real Asian night market to New Cairo — bold sauces, real spice,
+            nothing frozen longer than it has to be.
           </p>
           <p className="mt-4 max-w-2xl text-lg leading-relaxed text-muted">
             Every bowl is tossed to order by the FN team, right before it

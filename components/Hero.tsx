@@ -10,7 +10,7 @@ export default function Hero() {
         <div>
           <p className="flex items-center gap-3 text-sm font-bold uppercase tracking-[0.3em] text-gold">
             <span className="h-px w-6 bg-gold" aria-hidden />
-            Korean &amp; Chinese Fusion · New Cairo
+            Asian Fusion · New Cairo
           </p>
           <h1 className="font-display mt-5 text-[clamp(3rem,8vw,5.5rem)] leading-[0.92] tracking-wide text-ink">
             Noodles so <span className="text-accent">fresh</span>,
@@ -42,8 +42,8 @@ export default function Hero() {
 
           <div className="mt-12 flex flex-wrap items-center gap-8">
             <div>
-              <p className="font-display text-3xl text-ink">Korean × Chinese</p>
-              <p className="text-sm text-muted">Fusion menu</p>
+              <p className="font-display text-3xl text-ink">Asian Fusion</p>
+              <p className="text-sm text-muted">Menu</p>
             </div>
             <div className="h-10 w-px bg-line" aria-hidden />
             <div>

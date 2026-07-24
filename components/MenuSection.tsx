@@ -20,9 +20,7 @@ export default function MenuSection() {
             Slurp-worthy favorites
           </h2>
           <p className="mt-4 max-w-xl text-muted">
-            Real dishes, real photos, real prices from our posted menu. A
-            couple of items don&apos;t have a listed price yet — we&apos;ll
-            confirm those with you over WhatsApp.
+            Real dishes, real photos, real prices from our own menu.
           </p>
         </Reveal>
 
