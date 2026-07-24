@@ -19,10 +19,10 @@ export default function Story() {
             One team, one passion, one bowl at a time.
           </h2>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
-            Fresh Noodles started with Mr Nang bringing the Korean and
-            Chinese flavors he grew up on into a small kitchen inside Sunset
-            Compound — bold sauces, real spice, nothing frozen longer than
-            it has to be.
+            Fresh Noodles started with a simple idea: bring the Korean and
+            Chinese flavors of a real night market into Sunset Compound —
+            bold sauces, real spice, nothing frozen longer than it has to
+            be.
           </p>
           <p className="mt-4 max-w-2xl text-lg leading-relaxed text-muted">
             Every bowl is tossed to order by the FN team, right before it
@@ -46,38 +46,21 @@ export default function Story() {
           ))}
         </div>
 
-        <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2">
-          <Reveal>
-            <div className="overflow-hidden rounded-[1.75rem] border border-line">
-              <Image
-                src="/story/mr-nang.jpg"
-                alt="Mr Nang, chef and founder of Fresh Noodles, smiling"
-                width={414}
-                height={414}
-                className="w-full"
-                sizes="(max-width: 640px) 100vw, 45vw"
-              />
-            </div>
-            <p className="mt-3 text-sm font-bold uppercase tracking-widest text-muted">
-              Mr Nang, Chef &amp; Founder
-            </p>
-          </Reveal>
-          <Reveal delay={80}>
-            <div className="overflow-hidden rounded-[1.75rem] border border-line">
-              <Image
-                src="/story/fn-team.jpg"
-                alt="The Fresh Noodles kitchen team standing together"
-                width={414}
-                height={414}
-                className="w-full"
-                sizes="(max-width: 640px) 100vw, 45vw"
-              />
-            </div>
-            <p className="mt-3 text-sm font-bold uppercase tracking-widest text-muted">
-              The FN Team
-            </p>
-          </Reveal>
-        </div>
+        <Reveal className="mt-14">
+          <div className="overflow-hidden rounded-[1.75rem] border border-line">
+            <Image
+              src="/story/fn-team.jpg"
+              alt="The Fresh Noodles kitchen team standing together"
+              width={1086}
+              height={1448}
+              className="max-h-[520px] w-full object-cover"
+              sizes="(max-width: 640px) 100vw, 1024px"
+            />
+          </div>
+          <p className="mt-3 text-sm font-bold uppercase tracking-widest text-muted">
+            The FN Team
+          </p>
+        </Reveal>
       </div>
     </section>
   );

@@ -24,8 +24,8 @@ FN already has a loud, confident night-market brand (chili red, black marble, a 
 
 - Primary CTA: build an order → send via WhatsApp. Secondary: call to order, follow on Instagram/Facebook.
 - The line a visitor remembers: "Asia closer than ever."
-- Belief ladder: real food (real menu, real prices), real people (Mr Nang + the FN team), easy to order (two taps to WhatsApp).
-- Proof on hand: their own posted menu prices, team photo, founder photo.
+- Belief ladder: real food (real menu, real prices), real people (the FN team), easy to order (two taps to WhatsApp).
+- Proof on hand: their own posted menu prices and team photo.
 
 ## Brand Personality
 
@@ -55,7 +55,7 @@ Revised after the client shared a reference build (fresh-noodles.lovable.app) as
 - **Palette** (Tailwind v4 `@theme` tokens, oklch): `--color-bg` oklch(14% .02 30), `--color-surface` oklch(19% .025 30), `--color-ink` oklch(98% .01 80), `--color-muted` oklch(72% .02 80), `--color-accent` oklch(66% .22 32) chili red, `--color-gold` oklch(75% .19 65).
 - **Typography**: display — Bebas Neue (condensed, all-caps) for headlines; body — Inter. Matches the reference exactly.
 - **Photo strategy**: real dish photos, but the source images are compilation shots from FN's Facebook posts with baked-in marketing text — every image used on-site is pre-cropped (via PIL, see git history) to an honest, text-free region that actually matches the labeled dish. No image is used as a stand-in for a dish it doesn't show.
-- **Sections**: Nav (logo, links, Order Now → opens cart) → Hero (headline + real bowl photo + honest stat row) → Menu (featured photo tiles for every item with a real matching photo, plain list for the rest, real prices, "Ask in-store" flagged where unposted) → full-bleed banner photo break → Story (stat cards + Mr Nang/FN team photos) → Visit (real Sunset Compound address/hours/Maps link + Order & Follow) → Footer.
+- **Sections**: Nav (logo, links, Order Now → opens cart) → Hero (headline + real bowl photo + honest stat row) → Menu (featured photo tiles for every item with a real matching photo, plain list for the rest, real prices, "Ask in-store" flagged where unposted) → full-bleed banner photo break → Story (stat cards + FN team photo) → Visit (real Sunset Compound address/hours/Maps link + Order & Follow) → Footer.
 - Dropped from the original direction: the canvas steam effect and jade support color (not in the matched reference); kept the WhatsApp mock-cart ordering flow since it's a genuine functional upgrade over the reference's plain anchor-link button.
 
 ## Known placeholders (flagged for the owner to correct)
