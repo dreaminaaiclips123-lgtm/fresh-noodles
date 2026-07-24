@@ -10,7 +10,7 @@ export default function Hero() {
         <div>
           <p className="flex items-center gap-3 text-sm font-bold uppercase tracking-[0.3em] text-gold">
             <span className="h-px w-6 bg-gold" aria-hidden />
-            Korean &amp; Chinese Fusion · Sunset Compound
+            Korean &amp; Chinese Fusion · New Cairo
           </p>
           <h1 className="font-display mt-5 text-[clamp(3rem,8vw,5.5rem)] leading-[0.92] tracking-wide text-ink">
             Noodles so <span className="text-accent">fresh</span>,
@@ -19,7 +19,7 @@ export default function Hero() {
           </h1>
           <p className="mt-6 max-w-md text-lg leading-relaxed text-muted">
             Fresh noodles, wok-fired mains and crispy appetizers — tossed to
-            order and sent straight to your door in Sunset Compound.
+            order at Agora Mall and Arabella Plaza.
           </p>
 
           <div className="mt-9 flex flex-wrap items-center gap-4">

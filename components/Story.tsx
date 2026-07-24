@@ -20,9 +20,8 @@ export default function Story() {
           </h2>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
             Fresh Noodles started with a simple idea: bring the Korean and
-            Chinese flavors of a real night market into Sunset Compound —
-            bold sauces, real spice, nothing frozen longer than it has to
-            be.
+            Chinese flavors of a real night market to New Cairo — bold
+            sauces, real spice, nothing frozen longer than it has to be.
           </p>
           <p className="mt-4 max-w-2xl text-lg leading-relaxed text-muted">
             Every bowl is tossed to order by the FN team, right before it

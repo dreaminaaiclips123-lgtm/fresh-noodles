@@ -4,17 +4,18 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useCart } from "./CartProvider";
+import { SITE } from "@/lib/site";
 
 const LINKS = [
   { href: "/#menu", label: "Menu" },
   { href: "/#story", label: "Our Story" },
   { href: "/#visit", label: "Visit" },
-  { href: "https://www.instagram.com/freshnoodles.eg", label: "Instagram", external: true },
+  { href: SITE.instagram, label: "Instagram", external: true },
 ];
 
 export default function Nav() {
   const [open, setOpen] = useState(false);
-  const { count, open: openCart } = useCart();
+  const { count } = useCart();
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-line bg-bg/90 backdrop-blur-xl">
@@ -62,9 +63,8 @@ export default function Nav() {
         </div>
 
         <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={openCart}
+          <Link
+            href="/order"
             className="pressable relative inline-flex items-center gap-2 whitespace-nowrap rounded-full bg-accent px-4 py-2 text-sm font-semibold text-accent-ink sm:px-5"
           >
             Order Now
@@ -76,7 +76,7 @@ export default function Nav() {
                 {count}
               </span>
             )}
-          </button>
+          </Link>
 
           <button
             type="button"

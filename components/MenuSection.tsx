@@ -1,3 +1,5 @@
+import Link from "next/link";
+import { IconArrowRight } from "@tabler/icons-react";
 import Reveal from "./Reveal";
 import PhotoTile from "./PhotoTile";
 import MenuItemCard from "./MenuItemCard";
@@ -32,22 +34,36 @@ export default function MenuSection() {
           ))}
         </div>
 
-        {MENU.map((category) => (
-          <div key={category.id} className="mt-20">
-            <Reveal>
-              <h3 className="font-display text-3xl tracking-wide text-ink">
-                {category.title}
-              </h3>
-            </Reveal>
-            <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
-              {category.items.map((item, i) => (
-                <Reveal key={item.id} delay={(i % 4) * 60}>
-                  <MenuItemCard item={item} />
-                </Reveal>
-              ))}
+        {MENU.map((category) => {
+          const rest = category.items.filter((item) => !item.featured);
+          if (rest.length === 0) return null;
+          return (
+            <div key={category.id} className="mt-20">
+              <Reveal>
+                <h3 className="font-display text-3xl tracking-wide text-ink">
+                  {category.title}
+                </h3>
+              </Reveal>
+              <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
+                {rest.map((item, i) => (
+                  <Reveal key={item.id} delay={(i % 4) * 60}>
+                    <MenuItemCard item={item} />
+                  </Reveal>
+                ))}
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
+
+        <Reveal className="mt-16 flex justify-center">
+          <Link
+            href="/order"
+            className="pressable inline-flex items-center gap-2 rounded-full bg-accent px-7 py-3.5 text-base font-bold text-accent-ink"
+          >
+            Order online
+            <IconArrowRight size={18} aria-hidden />
+          </Link>
+        </Reveal>
       </div>
     </section>
   );

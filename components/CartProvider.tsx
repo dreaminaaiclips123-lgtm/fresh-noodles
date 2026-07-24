@@ -10,22 +10,19 @@ type CartContextValue = {
   count: number;
   subtotal: number;
   hasUnpriced: boolean;
-  isOpen: boolean;
   add: (item: MenuItem) => void;
   remove: (id: string) => void;
   setQty: (id: string, qty: number) => void;
-  open: () => void;
-  close: () => void;
   clear: () => void;
 };
 
 const CartContext = createContext<CartContextValue | null>(null);
 
-// Front-end-only mock cart: nothing is persisted or sent anywhere until the
-// visitor taps "Send to WhatsApp" in CartDrawer. No backend, no payment.
+// Front-end-only cart: nothing is persisted or sent anywhere until the
+// visitor taps "Send order on WhatsApp" or calls in on the /order page.
+// No backend, no payment.
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [lines, setLines] = useState<CartLine[]>([]);
-  const [isOpen, setIsOpen] = useState(false);
 
   const add = (item: MenuItem) => {
     setLines((prev) => {
@@ -37,7 +34,6 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       }
       return [...prev, { item, qty: 1 }];
     });
-    setIsOpen(true);
   };
 
   const remove = (id: string) => {
@@ -65,19 +61,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <CartContext.Provider
-      value={{
-        lines,
-        count,
-        subtotal,
-        hasUnpriced,
-        isOpen,
-        add,
-        remove,
-        setQty,
-        open: () => setIsOpen(true),
-        close: () => setIsOpen(false),
-        clear,
-      }}
+      value={{ lines, count, subtotal, hasUnpriced, add, remove, setQty, clear }}
     >
       {children}
     </CartContext.Provider>

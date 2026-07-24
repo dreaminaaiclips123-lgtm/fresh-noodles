@@ -19,7 +19,6 @@ export default function Footer() {
         <p className="text-sm text-muted">
           © {new Date().getFullYear()} — Asian food, made fresh in Egypt.
         </p>
-        <p className="text-sm text-muted">Demo site · Not the official website</p>
       </div>
     </footer>
   );

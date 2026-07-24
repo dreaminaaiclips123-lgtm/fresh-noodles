@@ -10,11 +10,11 @@ web
 
 ## Users
 
-Hungry locals in New Cairo (Sunset Compound and nearby) browsing on their phone at dinnertime, deciding what to order in the next 60 seconds. They arrive from an Instagram/Facebook link or a friend's recommendation. Secondary user: the owners, sending this link to reference/pitch what "FN online" should feel like before a real backend exists.
+Hungry locals near Agora Mall or Arabella Plaza in New Cairo, browsing on their phone at dinnertime, deciding what to order in the next 60 seconds. They arrive from an Instagram/Facebook link or a friend's recommendation.
 
 ## Product Purpose
 
-A demo site for Fresh Noodles (FN), a Korean/Chinese-fusion noodle delivery concept at Sunset Mall, Sunset Compound, Cairo. It exists to make a visitor hungry within one scroll and get them to order — via a mock cart that hands off to WhatsApp, or a direct call. Success is a visitor building an order and hitting "Send to WhatsApp."
+The live site for Fresh Noodles (FN), a Korean/Chinese-fusion noodle concept with two branches in New Cairo (Agora Mall, Arabella Plaza). It exists to make a visitor hungry within one scroll and get them to order — via a cart that hands off to WhatsApp, or a direct call. Success is a visitor building an order and hitting "Send to WhatsApp."
 
 ## Positioning
 
@@ -50,16 +50,17 @@ WCAG AA contrast (cream text on charcoal, chili red reserved for large/bold elem
 
 ## Concrete direction
 
-Revised after the client shared a reference build (fresh-noodles.lovable.app) as the target look — that reference uses placeholder menu items (ramen, bao buns), fabricated branches, and a fake star rating (its own footer admits "Demo site · Not the official website"). We matched its visual system exactly but kept FN's real menu, prices, single real location, and real photos rather than copying its invented content.
+Revised after the client shared a reference build (fresh-noodles.lovable.app) as the target look — that reference uses placeholder menu items (ramen, bao buns), fabricated branches, and a fake star rating (its own footer admitted "Demo site · Not the official website"). We matched its visual system but kept FN's real menu, prices, and real photos rather than copying its invented content.
 
 - **Palette** (Tailwind v4 `@theme` tokens, oklch): `--color-bg` oklch(14% .02 30), `--color-surface` oklch(19% .025 30), `--color-ink` oklch(98% .01 80), `--color-muted` oklch(72% .02 80), `--color-accent` oklch(66% .22 32) chili red, `--color-gold` oklch(75% .19 65).
-- **Typography**: display — Bebas Neue (condensed, all-caps) for headlines; body — Inter. Matches the reference exactly.
+- **Typography**: display — Bebas Neue (condensed, all-caps) for headlines; body — Inter.
 - **Photo strategy**: real dish photos, but the source images are compilation shots from FN's Facebook posts with baked-in marketing text — every image used on-site is pre-cropped (via PIL, see git history) to an honest, text-free region that actually matches the labeled dish. No image is used as a stand-in for a dish it doesn't show.
-- **Sections**: Nav (logo, links, Order Now → opens cart) → Hero (headline + real bowl photo + honest stat row) → Menu (featured photo tiles for every item with a real matching photo, plain list for the rest, real prices, "Ask in-store" flagged where unposted) → full-bleed banner photo break → Story (stat cards + FN team photo) → Visit (real Sunset Compound address/hours/Maps link + Order & Follow) → Footer.
-- Dropped from the original direction: the canvas steam effect and jade support color (not in the matched reference); kept the WhatsApp mock-cart ordering flow since it's a genuine functional upgrade over the reference's plain anchor-link button.
+- **Sections**: Nav (logo, links, Order Now → /order page) → Hero (headline + real bowl photo + honest stat row) → Menu (featured photo tiles for every item with a real matching photo, plain list for the rest, real prices, "Ask in-store" flagged where unposted) → full-bleed banner photo break → Story (stat cards + FN team photo) → Visit (Agora Mall + Arabella Plaza branch cards + Order & Follow) → Footer.
+- **/order page**: dedicated ordering flow — full menu as a text list (no photos, per owner request), add-to-cart, then checkout via WhatsApp handoff or a direct call link.
 
 ## Known placeholders (flagged for the owner to correct)
 
 - Beef Bulgogi / Chicken Noodles bowls: no posted price — marked "ask in-store" until confirmed.
 - Appetizers (spring rolls, dumplings, wings): no posted prices — marked "ask in-store" until confirmed.
-- Hours: Facebook shows "Open now" with no posted schedule — using a plausible delivery-hours placeholder (12pm–1am daily), flagged for correction.
+- Hours: no posted schedule per branch — using a plausible delivery-hours placeholder (12pm–1am daily) for both Agora Mall and Arabella Plaza, flagged for correction.
+- Branch addresses: only mall name + New Cairo confirmed — exact street address/unit not posted, so Maps links search by name rather than a precise pin.

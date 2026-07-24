@@ -4,7 +4,6 @@ import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import { CartProvider } from "@/components/CartProvider";
-import CartDrawer from "@/components/CartDrawer";
 
 const bebas = Bebas_Neue({
   variable: "--font-bebas",
@@ -22,15 +21,15 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL("https://freshnoodles.vercel.app"),
   title: {
-    default: "Fresh Noodles | Asian Fusion Delivery, Sunset Compound Cairo",
+    default: "Fresh Noodles | Asian Fusion Delivery, New Cairo",
     template: "%s | Fresh Noodles",
   },
   description:
-    "Fresh Noodles (FN) — Korean & Chinese fusion noodles, wok mains and appetizers, made fresh at Sunset Mall, Sunset Compound, Cairo. Order for delivery.",
+    "Fresh Noodles (FN) — Korean & Chinese fusion noodles, wok mains and appetizers, made fresh at Agora Mall and Arabella Plaza, New Cairo. Order for delivery.",
   openGraph: {
     title: "Fresh Noodles | Asia Closer Than Ever",
     description:
-      "Korean & Chinese fusion noodles and wok mains, made fresh in Sunset Compound, Cairo.",
+      "Korean & Chinese fusion noodles and wok mains, made fresh in New Cairo.",
     type: "website",
   },
 };
@@ -47,7 +46,6 @@ export default function RootLayout({
           <Nav />
           <main>{children}</main>
           <Footer />
-          <CartDrawer />
         </CartProvider>
       </body>
     </html>
