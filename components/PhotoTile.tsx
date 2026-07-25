@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { IconFlame, IconPlus } from "@tabler/icons-react";
 import { useCart } from "./CartProvider";
+import PriceTag from "./PriceTag";
 import type { MenuItem } from "@/lib/menu";
 
 export default function PhotoTile({ item }: { item: MenuItem }) {
@@ -25,9 +26,7 @@ export default function PhotoTile({ item }: { item: MenuItem }) {
             </span>
           )}
         </div>
-        <span className="font-display text-xl tracking-wide text-gold">
-          {item.price === null ? "Ask in-store" : `${item.price} EGP`}
-        </span>
+        <PriceTag item={item} align="end" size="xl" />
       </div>
 
       <div className="px-5 pb-2">

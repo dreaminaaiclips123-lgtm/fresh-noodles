@@ -9,27 +9,22 @@ import {
   IconPlus,
 } from "@tabler/icons-react";
 import { useCart } from "./CartProvider";
+import PriceTag from "./PriceTag";
 import { MENU, type MenuItem } from "@/lib/menu";
 import { SITE } from "@/lib/site";
 
 function buildWhatsAppMessage(
-  lines: { item: { name: string; price: number | null }; variant?: string; qty: number }[],
-  subtotal: number,
-  hasUnpriced: boolean
+  lines: { item: { name: string; price: number }; variant?: string; qty: number }[],
+  subtotal: number
 ) {
   const itemLines = lines
     .map((l) => {
-      const price = l.item.price === null ? "price to confirm" : `${l.item.price} EGP`;
       const variant = l.variant ? ` (${l.variant})` : "";
-      return `• ${l.qty}x ${l.item.name}${variant} (${price})`;
+      return `• ${l.qty}x ${l.item.name}${variant} (${l.item.price} EGP)`;
     })
     .join("\n");
 
-  const total = hasUnpriced
-    ? `Subtotal: ${subtotal} EGP + items to confirm`
-    : `Subtotal: ${subtotal} EGP`;
-
-  return `Hi Fresh Noodles! I'd like to order:\n\n${itemLines}\n\n${total}\n\nDelivery address: `;
+  return `Hi Fresh Noodles! I'd like to order:\n\n${itemLines}\n\nSubtotal: ${subtotal} EGP\n\nDelivery address: \n(Please send us your location to ensure a smooth delivery process.)`;
 }
 
 function QtyControl({ item }: { item: MenuItem }) {
@@ -103,9 +98,9 @@ function OrderRow({ item }: { item: MenuItem }) {
           )}
         </div>
         <p className="mt-1 text-sm text-muted">{item.description}</p>
-        <p className="mt-1 font-display text-lg tracking-wide text-gold">
-          {item.price === null ? "Ask in-store" : `${item.price} EGP`}
-        </p>
+        <div className="mt-1">
+          <PriceTag item={item} />
+        </div>
       </div>
       <QtyControl item={item} />
     </div>
@@ -113,10 +108,10 @@ function OrderRow({ item }: { item: MenuItem }) {
 }
 
 export default function OrderMenu() {
-  const { lines, count, subtotal, hasUnpriced, remove } = useCart();
+  const { lines, count, subtotal, remove } = useCart();
 
-  const waHref = `https://wa.me/${SITE.whatsappNumber}?text=${encodeURIComponent(
-    buildWhatsAppMessage(lines, subtotal, hasUnpriced)
+  const waHref = `https://wa.me/${SITE.orderWhatsappNumber}?text=${encodeURIComponent(
+    buildWhatsAppMessage(lines, subtotal)
   )}`;
 
   return (
@@ -154,9 +149,7 @@ export default function OrderMenu() {
                     {l.qty}x {l.item.name}
                     {l.variant && <span className="text-muted"> ({l.variant})</span>}
                   </p>
-                  <p className="text-xs text-muted">
-                    {l.item.price === null ? "Ask in-store" : `${l.item.price} EGP each`}
-                  </p>
+                  <p className="text-xs text-muted">{l.item.price} EGP each</p>
                 </div>
                 <button
                   type="button"
@@ -171,19 +164,12 @@ export default function OrderMenu() {
         )}
 
         {lines.length > 0 && (
-          <>
-            <div className="mt-5 flex items-baseline justify-between border-t border-line pt-4">
-              <span className="text-sm font-semibold uppercase tracking-wide text-muted">
-                Subtotal ({count})
-              </span>
-              <span className="font-display text-2xl text-gold">{subtotal} EGP</span>
-            </div>
-            {hasUnpriced && (
-              <p className="mt-2 text-xs text-muted">
-                Some items don&apos;t have a posted price yet — we&apos;ll confirm those with you.
-              </p>
-            )}
-          </>
+          <div className="mt-5 flex items-baseline justify-between border-t border-line pt-4">
+            <span className="text-sm font-semibold uppercase tracking-wide text-muted">
+              Subtotal ({count})
+            </span>
+            <span className="font-display text-2xl text-gold">{subtotal} EGP</span>
+          </div>
         )}
 
         <a

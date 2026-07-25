@@ -78,7 +78,7 @@ export default function Visit() {
               </li>
               <li>
                 <a
-                  href={`https://wa.me/${SITE.whatsappNumber}`}
+                  href={`https://wa.me/${SITE.orderWhatsappNumber}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="sweep-link inline-flex items-center gap-2"

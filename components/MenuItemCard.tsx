@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { IconFlame, IconPlus } from "@tabler/icons-react";
 import { useCart } from "./CartProvider";
+import PriceTag from "./PriceTag";
 import type { MenuItem } from "@/lib/menu";
 
 export default function MenuItemCard({ item }: { item: MenuItem }) {
@@ -31,9 +32,9 @@ export default function MenuItemCard({ item }: { item: MenuItem }) {
         <p className="mt-1.5 text-sm leading-relaxed text-muted">
           {item.description}
         </p>
-        <p className="mt-3 font-display text-lg tracking-wide text-gold">
-          {item.price === null ? "Ask in-store" : `${item.price} EGP`}
-        </p>
+        <div className="mt-3">
+          <PriceTag item={item} />
+        </div>
 
         {item.options && (
           <label className="mt-3 flex items-center gap-2 text-sm text-ink">

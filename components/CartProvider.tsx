@@ -9,7 +9,6 @@ type CartContextValue = {
   lines: CartLine[];
   count: number;
   subtotal: number;
-  hasUnpriced: boolean;
   add: (item: MenuItem, variant?: string) => void;
   remove: (key: string) => void;
   setQty: (key: string, qty: number) => void;
@@ -56,17 +55,13 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const count = useMemo(() => lines.reduce((n, l) => n + l.qty, 0), [lines]);
   const subtotal = useMemo(
-    () => lines.reduce((n, l) => n + (l.item.price ?? 0) * l.qty, 0),
-    [lines]
-  );
-  const hasUnpriced = useMemo(
-    () => lines.some((l) => l.item.price === null),
+    () => lines.reduce((n, l) => n + l.item.price * l.qty, 0),
     [lines]
   );
 
   return (
     <CartContext.Provider
-      value={{ lines, count, subtotal, hasUnpriced, add, remove, setQty, qtyFor, clear }}
+      value={{ lines, count, subtotal, add, remove, setQty, qtyFor, clear }}
     >
       {children}
     </CartContext.Provider>

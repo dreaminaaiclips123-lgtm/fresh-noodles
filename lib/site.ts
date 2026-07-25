@@ -7,6 +7,8 @@ export const SITE = {
   phoneDisplay: "010 4057 0788",
   // Egypt mobile numbers are 010/011/012/015 + 8 digits; country code +20 drops the leading 0.
   whatsappNumber: "201040570788",
+  // WhatsApp orders go to a separate number from the main call line.
+  orderWhatsappNumber: "201008138928",
   instagram:
     "https://www.instagram.com/freshnoodles.eg?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
   facebook: "https://www.facebook.com/profile.php?id=61563865457433",

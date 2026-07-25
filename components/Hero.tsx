@@ -30,7 +30,7 @@ export default function Hero() {
               See the Menu
             </Link>
             <a
-              href={`https://wa.me/${SITE.whatsappNumber}`}
+              href={`https://wa.me/${SITE.orderWhatsappNumber}`}
               target="_blank"
               rel="noopener noreferrer"
               className="pressable inline-flex items-center gap-2 rounded-full border border-line px-7 py-3.5 text-base font-bold text-ink hover:border-gold"
