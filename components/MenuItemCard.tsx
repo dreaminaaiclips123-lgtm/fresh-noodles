@@ -7,7 +7,7 @@ import type { MenuItem } from "@/lib/menu";
 
 export default function MenuItemCard({ item }: { item: MenuItem }) {
   return (
-    <div className="menu-card flex items-start justify-between gap-4 rounded-2xl border border-line bg-surface p-5">
+    <div className="menu-card flex items-center justify-between gap-4 rounded-2xl border border-line bg-surface p-5">
       <div className="min-w-0">
         <div className="flex flex-wrap items-baseline gap-x-2">
           <h3 className="font-semibold text-ink">{item.name}</h3>
