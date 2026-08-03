@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useCart } from "./CartProvider";
 
 const LINKS = [
   { href: "/#menu", label: "Menu" },
@@ -13,7 +12,6 @@ const LINKS = [
 
 export default function Nav() {
   const [open, setOpen] = useState(false);
-  const { count } = useCart();
 
   return (
     <>
@@ -55,14 +53,6 @@ export default function Nav() {
               className="pressable relative inline-flex items-center gap-2 whitespace-nowrap rounded-full bg-accent px-4 py-2 text-sm font-semibold text-accent-ink sm:px-5"
             >
               Order Now
-              {count > 0 && (
-                <span
-                  key={count}
-                  className="badge-pop flex h-5 min-w-5 items-center justify-center rounded-full bg-gold px-1 text-[11px] font-bold text-gold-ink"
-                >
-                  {count}
-                </span>
-              )}
             </Link>
 
             <button
