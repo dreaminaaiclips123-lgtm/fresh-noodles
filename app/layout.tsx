@@ -4,6 +4,8 @@ import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import { CartProvider } from "@/components/CartProvider";
+import CartDrawer from "@/components/CartDrawer";
+import FloatingCartBar from "@/components/FloatingCartBar";
 
 const bebas = Bebas_Neue({
   variable: "--font-bebas",
@@ -46,6 +48,8 @@ export default function RootLayout({
           <Nav />
           <main>{children}</main>
           <Footer />
+          <CartDrawer />
+          <FloatingCartBar />
         </CartProvider>
       </body>
     </html>

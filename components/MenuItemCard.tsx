@@ -1,15 +1,11 @@
 "use client";
 
-import { useState } from "react";
-import { IconFlame, IconPlus } from "@tabler/icons-react";
-import { useCart } from "./CartProvider";
+import { IconFlame } from "@tabler/icons-react";
 import PriceTag from "./PriceTag";
+import QtyControl from "./QtyControl";
 import type { MenuItem } from "@/lib/menu";
 
 export default function MenuItemCard({ item }: { item: MenuItem }) {
-  const { add } = useCart();
-  const [choice, setChoice] = useState(item.options?.choices[0] ?? "");
-
   return (
     <div className="menu-card flex items-start justify-between gap-4 rounded-2xl border border-line bg-surface p-5">
       <div className="min-w-0">
@@ -35,33 +31,9 @@ export default function MenuItemCard({ item }: { item: MenuItem }) {
         <div className="mt-3">
           <PriceTag item={item} />
         </div>
-
-        {item.options && (
-          <label className="mt-3 flex items-center gap-2 text-sm text-ink">
-            {item.options.label}:
-            <select
-              value={choice}
-              onChange={(e) => setChoice(e.target.value)}
-              className="rounded-full border border-line bg-surface-2 px-3 py-1 text-sm text-ink"
-            >
-              {item.options.choices.map((c) => (
-                <option key={c} value={c}>
-                  {c}
-                </option>
-              ))}
-            </select>
-          </label>
-        )}
       </div>
 
-      <button
-        type="button"
-        onClick={() => add(item, item.options ? choice : undefined)}
-        aria-label={`Add ${item.name} to order`}
-        className="pressable flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-accent text-accent-ink"
-      >
-        <IconPlus size={18} stroke={2.5} aria-hidden />
-      </button>
+      <QtyControl item={item} size="sm" />
     </div>
   );
 }

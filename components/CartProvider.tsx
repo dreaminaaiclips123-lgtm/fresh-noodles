@@ -9,11 +9,14 @@ type CartContextValue = {
   lines: CartLine[];
   count: number;
   subtotal: number;
+  isOpen: boolean;
   add: (item: MenuItem, variant?: string) => void;
   remove: (key: string) => void;
   setQty: (key: string, qty: number) => void;
   qtyFor: (item: MenuItem, variant?: string) => number;
   clear: () => void;
+  open: () => void;
+  close: () => void;
 };
 
 const CartContext = createContext<CartContextValue | null>(null);
@@ -21,10 +24,11 @@ const CartContext = createContext<CartContextValue | null>(null);
 const lineKey = (id: string, variant?: string) => (variant ? `${id}::${variant}` : id);
 
 // Front-end-only cart: nothing is persisted or sent anywhere until the
-// visitor taps "Send order on WhatsApp" or calls in on the /order page.
+// visitor taps "Send order on WhatsApp" or calls in from the cart drawer.
 // No backend, no payment.
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [lines, setLines] = useState<CartLine[]>([]);
+  const [isOpen, setIsOpen] = useState(false);
 
   const add = (item: MenuItem, variant?: string) => {
     const key = lineKey(item.id, variant);
@@ -61,7 +65,19 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <CartContext.Provider
-      value={{ lines, count, subtotal, add, remove, setQty, qtyFor, clear }}
+      value={{
+        lines,
+        count,
+        subtotal,
+        isOpen,
+        add,
+        remove,
+        setQty,
+        qtyFor,
+        clear,
+        open: () => setIsOpen(true),
+        close: () => setIsOpen(false),
+      }}
     >
       {children}
     </CartContext.Provider>

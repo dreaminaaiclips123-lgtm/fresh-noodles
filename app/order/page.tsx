@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function OrderPage() {
   return (
-    <section className="px-5 pb-24 pt-32 sm:px-10 sm:pt-40">
+    <section className="px-5 pb-32 pt-32 sm:px-10 sm:pb-24 sm:pt-40">
       <div className="mx-auto max-w-5xl">
         <Link
           href="/"

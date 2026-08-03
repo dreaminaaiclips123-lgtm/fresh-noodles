@@ -1,14 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { IconFlame, IconPlus } from "@tabler/icons-react";
-import { useCart } from "./CartProvider";
+import { IconFlame } from "@tabler/icons-react";
 import PriceTag from "./PriceTag";
+import QtyControl from "./QtyControl";
 import type { MenuItem } from "@/lib/menu";
 
 export default function PhotoTile({ item }: { item: MenuItem }) {
-  const { add } = useCart();
-
   return (
     <div className="menu-card flex flex-col overflow-hidden rounded-2xl border border-line bg-surface">
       <div className="flex items-start justify-between gap-3 p-5 pb-4">
@@ -44,14 +42,9 @@ export default function PhotoTile({ item }: { item: MenuItem }) {
             sizes="(max-width: 640px) 100vw, 50vw"
           />
         )}
-        <button
-          type="button"
-          onClick={() => add(item)}
-          aria-label={`Add ${item.name} to order`}
-          className="pressable absolute bottom-3 right-3 flex h-10 w-10 items-center justify-center rounded-full bg-accent text-accent-ink shadow-lg"
-        >
-          <IconPlus size={18} stroke={2.5} aria-hidden />
-        </button>
+        <div className="absolute bottom-3 right-3">
+          <QtyControl item={item} />
+        </div>
       </div>
     </div>
   );
