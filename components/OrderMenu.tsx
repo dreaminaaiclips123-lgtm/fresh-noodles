@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { IconFlame } from "@tabler/icons-react";
 import PriceTag from "./PriceTag";
 import QtyControl from "./QtyControl";
@@ -8,20 +9,33 @@ import { MENU, type MenuItem } from "@/lib/menu";
 function OrderRow({ item }: { item: MenuItem }) {
   return (
     <div className="flex flex-wrap items-center justify-between gap-4 border-b border-line py-4">
-      <div className="min-w-0">
-        <div className="flex flex-wrap items-baseline gap-x-2">
-          <h4 className="font-semibold text-ink">{item.name}</h4>
-          {item.spicy && (
-            <span className="flex items-center" aria-label={`Spice level ${item.spicy} of 3`}>
-              {Array.from({ length: item.spicy }).map((_, i) => (
-                <IconFlame key={i} size={12} className="text-accent" fill="currentColor" aria-hidden />
-              ))}
-            </span>
-          )}
-        </div>
-        <p className="mt-1 text-sm text-muted">{item.description}</p>
-        <div className="mt-1">
-          <PriceTag item={item} />
+      <div className="flex min-w-0 items-center gap-4">
+        {item.image && (
+          <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-xl">
+            <Image
+              src={item.image}
+              alt={item.name}
+              fill
+              className="object-cover"
+              sizes="64px"
+            />
+          </div>
+        )}
+        <div className="min-w-0">
+          <div className="flex flex-wrap items-baseline gap-x-2">
+            <h4 className="font-semibold text-ink">{item.name}</h4>
+            {item.spicy && (
+              <span className="flex items-center" aria-label={`Spice level ${item.spicy} of 3`}>
+                {Array.from({ length: item.spicy }).map((_, i) => (
+                  <IconFlame key={i} size={12} className="text-accent" fill="currentColor" aria-hidden />
+                ))}
+              </span>
+            )}
+          </div>
+          <p className="mt-1 text-sm text-muted">{item.description}</p>
+          <div className="mt-1">
+            <PriceTag item={item} />
+          </div>
         </div>
       </div>
       <QtyControl item={item} size="sm" />

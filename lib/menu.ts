@@ -50,6 +50,7 @@ export const MENU: MenuCategory[] = [
         description: "Chicken ramen soup with vegetables and egg.",
         originalPrice: 320,
         price: 224,
+        image: "/menu/chicken-ramen-soup.jpg",
       },
       {
         id: "tom-yum-shrimp-soup",
@@ -58,6 +59,7 @@ export const MENU: MenuCategory[] = [
         originalPrice: 250,
         price: 175,
         spicy: 2,
+        image: "/menu/tom-yum-shrimp-soup.jpg",
       },
       {
         id: "chicken-laksa-soup",
@@ -65,6 +67,7 @@ export const MENU: MenuCategory[] = [
         description: "Malaysian glass noodle soup with chicken and vegetables.",
         originalPrice: 320,
         price: 224,
+        image: "/menu/chicken-laksa-soup.jpg",
       },
       {
         id: "laksa-shrimp-soup",
@@ -72,6 +75,7 @@ export const MENU: MenuCategory[] = [
         description: "Malaysian noodle soup with shrimp and vegetables.",
         originalPrice: 350,
         price: 245,
+        image: "/menu/laksa-shrimp-soup.jpg",
       },
     ],
   },
@@ -109,6 +113,7 @@ export const MENU: MenuCategory[] = [
         originalPrice: 220,
         price: 154,
         spicy: 1,
+        image: "/menu/beef-gyoza.jpg",
       },
       {
         id: "chicken-gyoza",
@@ -117,6 +122,7 @@ export const MENU: MenuCategory[] = [
         originalPrice: 210,
         price: 147,
         spicy: 1,
+        image: "/menu/chicken-gyoza.jpg",
       },
       {
         id: "shrimp-gyoza",
@@ -124,6 +130,7 @@ export const MENU: MenuCategory[] = [
         description: "Dumplings stuffed with shrimp, served with ponzu sauce.",
         originalPrice: 230,
         price: 161,
+        image: "/menu/shrimp-gyoza.jpg",
       },
       {
         id: "shrimp-dynamite",
@@ -133,6 +140,7 @@ export const MENU: MenuCategory[] = [
         originalPrice: 250,
         price: 175,
         spicy: 1,
+        image: "/menu/shrimp-dynamite.jpg",
       },
       {
         id: "teriyaki-fries",
@@ -140,6 +148,7 @@ export const MENU: MenuCategory[] = [
         description: "French fries topped with teriyaki mayonnaise sauce.",
         originalPrice: 150,
         price: 105,
+        image: "/menu/teriyaki-fries.jpg",
       },
     ],
   },
@@ -174,6 +183,7 @@ export const MENU: MenuCategory[] = [
         originalPrice: 500,
         price: 350,
         options: { label: "Side", choices: ["Rice", "Noodles"] },
+        image: "/menu/sweet-sour-chicken-bundle.jpg",
       },
       {
         id: "beef-black-pepper-bundle",
@@ -181,6 +191,7 @@ export const MENU: MenuCategory[] = [
         description: "Black pepper beef dish with teriyaki potatoes and a drink.",
         originalPrice: 470,
         price: 329,
+        image: "/menu/beef-black-pepper-bundle.jpg",
       },
       {
         id: "shrimp-teriyaki-sauce",
@@ -188,6 +199,7 @@ export const MENU: MenuCategory[] = [
         description: "Fried shrimp with teriyaki sauce, mushrooms, peppers, and onions.",
         originalPrice: 390,
         price: 273,
+        image: "/menu/shrimp-teriyaki-sauce.jpg",
       },
       {
         id: "teriyaki-chicken",
@@ -196,6 +208,7 @@ export const MENU: MenuCategory[] = [
           "Tender chicken cooked in a rich teriyaki sauce with bell peppers, onions, and mushrooms.",
         originalPrice: 390,
         price: 273,
+        image: "/menu/teriyaki-chicken.jpg",
       },
       {
         id: "spicy-szechuan-chicken",
@@ -204,6 +217,7 @@ export const MENU: MenuCategory[] = [
         originalPrice: 390,
         price: 273,
         spicy: 2,
+        image: "/menu/spicy-szechuan-chicken.jpg",
       },
       {
         id: "sichuan-spicy-shrimp",
@@ -212,6 +226,7 @@ export const MENU: MenuCategory[] = [
         originalPrice: 390,
         price: 273,
         spicy: 2,
+        image: "/menu/sichuan-spicy-shrimp.jpg",
       },
       {
         id: "sweet-and-sour-shrimp",
@@ -219,6 +234,7 @@ export const MENU: MenuCategory[] = [
         description: "Shrimp cooked in a sweet and sour sauce.",
         originalPrice: 390,
         price: 273,
+        image: "/menu/sweet-and-sour-shrimp.jpg",
       },
       {
         id: "indian-chicken-curry",
@@ -228,6 +244,7 @@ export const MENU: MenuCategory[] = [
         originalPrice: 350,
         price: 245,
         spicy: 1,
+        image: "/menu/indian-chicken-curry.jpg",
       },
     ],
   },
@@ -292,6 +309,7 @@ export const MENU: MenuCategory[] = [
         originalPrice: 350,
         price: 245,
         spicy: 2,
+        image: "/menu/chicken-ramen-buldak.jpg",
       },
       {
         id: "japanese-curry-chicken-ramen",
@@ -300,6 +318,7 @@ export const MENU: MenuCategory[] = [
           "Handmade ramen soup with chicken slices in authentic Japanese curry sauce, served with kimchi, sprouts, and fresh spinach.",
         originalPrice: 350,
         price: 245,
+        image: "/menu/japanese-curry-chicken-ramen.jpg",
       },
       {
         id: "fresh-vegetable-noodles",
@@ -307,6 +326,7 @@ export const MENU: MenuCategory[] = [
         description: "Fried noodles with fresh vegetables.",
         originalPrice: 170,
         price: 119,
+        image: "/menu/fresh-vegetable-noodles.jpg",
       },
       {
         id: "spicy-shrimp-noodles",
@@ -315,6 +335,7 @@ export const MENU: MenuCategory[] = [
         originalPrice: 390,
         price: 273,
         spicy: 2,
+        image: "/menu/spicy-shrimp-noodles.jpg",
       },
     ],
   },
@@ -328,6 +349,7 @@ export const MENU: MenuCategory[] = [
         description: "Bao bun filled with Korean-style bulgogi beef.",
         originalPrice: 100,
         price: 70,
+        image: "/menu/beef-bulgogi-bao.jpg",
       },
       {
         id: "chicken-katsu-bao",
@@ -335,6 +357,7 @@ export const MENU: MenuCategory[] = [
         description: "Bao bun filled with chicken and katsu sauce.",
         originalPrice: 100,
         price: 70,
+        image: "/menu/chicken-katsu-bao.jpg",
       },
       {
         id: "dynamite-bao-shrimp",
@@ -343,6 +366,7 @@ export const MENU: MenuCategory[] = [
         originalPrice: 100,
         price: 70,
         spicy: 1,
+        image: "/menu/dynamite-bao-shrimp.jpg",
       },
     ],
   },
@@ -365,6 +389,7 @@ export const MENU: MenuCategory[] = [
         description: "Steamed white rice.",
         originalPrice: 70,
         price: 49,
+        image: "/menu/steamed-rice.jpg",
       },
     ],
   },
@@ -378,6 +403,7 @@ export const MENU: MenuCategory[] = [
         description: "Thai-style salad with marinated beef slices.",
         originalPrice: 250,
         price: 175,
+        image: "/menu/thai-beef-salad.jpg",
       },
       {
         id: "korean-chicken-salad",
@@ -385,6 +411,7 @@ export const MENU: MenuCategory[] = [
         description: "Salad with grilled chicken, Korean style.",
         originalPrice: 230,
         price: 161,
+        image: "/menu/korean-chicken-salad.jpg",
       },
     ],
   },
