@@ -24,7 +24,13 @@ export default function MenuSection() {
           </p>
         </Reveal>
 
-        <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2">
+        <Reveal className="mt-10">
+          <p className="inline-block rounded-lg border border-gold px-4 py-2 text-sm font-semibold text-gold">
+            15% discount applies to all dishes
+          </p>
+        </Reveal>
+
+        <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2">
           {FEATURED.map((item, i) => (
             <Reveal key={item.id} delay={(i % 2) * 80}>
               <PhotoTile item={item} />

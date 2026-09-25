@@ -29,6 +29,11 @@ export default function OrderPage() {
         </p>
 
         <div className="mt-12">
+          <div className="mx-auto max-w-3xl">
+            <p className="mb-8 inline-block rounded-lg border border-gold px-4 py-2 text-sm font-semibold text-gold">
+              15% discount applies to all dishes
+            </p>
+          </div>
           <OrderMenu />
         </div>
       </div>
