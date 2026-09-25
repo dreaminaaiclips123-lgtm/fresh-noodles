@@ -26,10 +26,9 @@ export type MenuCategory = {
   items: MenuItem[];
 };
 
-// Full menu, prices (EGP) and descriptions sourced from Fresh Noodles' own
-// Talabat listing (talabat.com/egypt/restaurant/775136/fresh-nodles) — their
-// live, current ordering menu. Talabat shows both an original and a
-// discounted price for nearly every item; both are mirrored here exactly.
+// Prices are synced from Fresh Noodles' Talabat listing by
+// scripts/sync-talabat.mjs: originalPrice mirrors Talabat's original, and
+// price applies Talabat's discount plus 5 extra percentage points.
 export const MENU: MenuCategory[] = [
   {
     id: "soup",
@@ -181,7 +180,7 @@ export const MENU: MenuCategory[] = [
         description:
           "Sweet & sour chicken dish, served with vegetables and salad.",
         originalPrice: 550,
-        price: 468,
+        price: 523,
         options: { label: "Side", choices: ["Rice", "Noodles"] },
         image: "/menu/sweet-sour-chicken-bundle.jpg",
       },
@@ -190,7 +189,7 @@ export const MENU: MenuCategory[] = [
         name: "Beef with Black Pepper Bundle",
         description: "Black pepper beef dish with teriyaki potatoes and a drink.",
         originalPrice: 520,
-        price: 442,
+        price: 494,
         image: "/menu/beef-black-pepper-bundle.jpg",
       },
       {
@@ -257,21 +256,21 @@ export const MENU: MenuCategory[] = [
         name: "Water",
         description: "Bottled water.",
         originalPrice: 20,
-        price: 20,
+        price: 19,
       },
       {
         id: "v-cola",
         name: "Fi Cola",
         description: "Carbonated soft drink.",
         originalPrice: 35,
-        price: 35,
+        price: 33,
       },
       {
         id: "7-up",
         name: "7 UP",
         description: "Lemon-lime flavored soft drink.",
         originalPrice: 35,
-        price: 35,
+        price: 33,
       },
     ],
   },
@@ -422,3 +421,12 @@ export const FEATURED: MenuItem[] = MENU.flatMap((c) =>
 );
 
 export const ALL_ITEMS: MenuItem[] = MENU.flatMap((c) => c.items);
+
+const discounts = ALL_ITEMS.map((i) =>
+  Math.round((1 - i.price / i.originalPrice) * 100)
+);
+const maxDiscount = Math.max(...discounts);
+
+export const DISCOUNT_NOTICE = discounts.every((d) => d === maxDiscount)
+  ? `${maxDiscount}% discount applies to the whole menu`
+  : `Up to ${maxDiscount}% off the menu`;

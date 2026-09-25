@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { IconArrowLeft } from "@tabler/icons-react";
 import OrderMenu from "@/components/OrderMenu";
+import { DISCOUNT_NOTICE } from "@/lib/menu";
 
 export const metadata: Metadata = {
   title: "Order Online",
@@ -31,7 +32,7 @@ export default function OrderPage() {
         <div className="mt-12">
           <div className="mx-auto max-w-3xl">
             <p className="mb-8 inline-block rounded-lg border border-gold px-4 py-2 text-sm font-semibold text-gold">
-              15% discount applies to all dishes
+              {DISCOUNT_NOTICE}
             </p>
           </div>
           <OrderMenu />

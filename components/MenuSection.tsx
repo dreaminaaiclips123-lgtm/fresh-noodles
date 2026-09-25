@@ -3,7 +3,7 @@ import { IconArrowRight } from "@tabler/icons-react";
 import Reveal from "./Reveal";
 import PhotoTile from "./PhotoTile";
 import MenuItemCard from "./MenuItemCard";
-import { FEATURED, MENU } from "@/lib/menu";
+import { DISCOUNT_NOTICE, FEATURED, MENU } from "@/lib/menu";
 
 export default function MenuSection() {
   return (
@@ -26,7 +26,7 @@ export default function MenuSection() {
 
         <Reveal className="mt-10">
           <p className="inline-block rounded-lg border border-gold px-4 py-2 text-sm font-semibold text-gold">
-            15% discount applies to all dishes
+            {DISCOUNT_NOTICE}
           </p>
         </Reveal>
 
