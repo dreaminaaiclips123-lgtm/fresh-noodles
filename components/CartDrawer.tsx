@@ -4,26 +4,44 @@ import { useEffect } from "react";
 import { IconBrandWhatsapp, IconPhone, IconX } from "@tabler/icons-react";
 import { useCart } from "./CartProvider";
 import QtyControl from "./QtyControl";
+import FreeDeliveryProgress from "./FreeDeliveryProgress";
 import { SITE } from "@/lib/site";
 
 function buildWhatsAppMessage(
-  lines: { item: { name: string; price: number }; variant?: string; qty: number }[],
-  subtotal: number
+  lines: { item: { name: string; originalPrice: number }; variant?: string; qty: number }[],
+  totals: {
+    subtotal: number;
+    discount: number;
+    discountPercent: number;
+    deliveryFee: number;
+    grandTotal: number;
+  }
 ) {
   const itemLines = lines
     .map((l) => {
       const variant = l.variant ? ` (${l.variant})` : "";
-      return `• ${l.qty}x ${l.item.name}${variant} (${l.item.price} EGP)`;
+      return `• ${l.qty}x ${l.item.name}${variant} (${l.item.originalPrice} EGP)`;
     })
     .join("\n");
 
-  return `Hi Fresh Noodles! I'd like to order:\n\n${itemLines}\n\nSubtotal: ${subtotal} EGP\n\nDelivery address: \n(Please send us your location to ensure a smooth delivery process.)`;
+  return `Hi Fresh Noodles! I'd like to order:\n\n${itemLines}\n\nSubtotal: ${totals.subtotal} EGP\nDiscount (${totals.discountPercent}%): -${totals.discount} EGP\nDelivery: ${totals.deliveryFee ? `${totals.deliveryFee} EGP` : "Free"}\nTotal: ${totals.grandTotal} EGP\n\nDelivery address: \n(Please send us your location to ensure a smooth delivery process.)`;
 }
 
 // Rendered at the top level (not nested inside the backdrop-blurred nav) so
 // it isn't affected by Safari's containing-block quirk with backdrop-filter.
 export default function CartDrawer() {
-  const { lines, count, subtotal, isOpen, close, remove } = useCart();
+  const {
+    lines,
+    count,
+    subtotal,
+    discount,
+    discountPercent,
+    deliveryFee,
+    grandTotal,
+    isOpen,
+    close,
+    remove,
+  } = useCart();
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "";
@@ -42,7 +60,7 @@ export default function CartDrawer() {
   }, [isOpen, close]);
 
   const waHref = `https://wa.me/${SITE.orderWhatsappNumber}?text=${encodeURIComponent(
-    buildWhatsAppMessage(lines, subtotal)
+    buildWhatsAppMessage(lines, { subtotal, discount, discountPercent, deliveryFee, grandTotal })
   )}`;
 
   return (
@@ -81,37 +99,58 @@ export default function CartDrawer() {
               Nothing yet — add something spicy from the menu.
             </p>
           ) : (
-            <ul className="flex flex-col gap-5">
-              {lines.map((l) => (
-                <li key={l.key} className="flex items-start justify-between gap-3">
-                  <div className="min-w-0">
-                    <p className="font-semibold text-ink">
-                      {l.item.name}
-                      {l.variant && <span className="text-muted"> ({l.variant})</span>}
-                    </p>
-                    <p className="mt-0.5 text-sm text-muted">{l.item.price} EGP each</p>
-                    <button
-                      type="button"
-                      onClick={() => remove(l.key)}
-                      className="sweep-link mt-1 text-xs font-semibold text-muted hover:text-accent"
-                    >
-                      Remove
-                    </button>
-                  </div>
-                  <QtyControl item={l.item} size="sm" />
-                </li>
-              ))}
-            </ul>
+            <>
+              <FreeDeliveryProgress />
+              <ul className="mt-5 flex flex-col gap-5">
+                {lines.map((l) => (
+                  <li key={l.key} className="flex items-start justify-between gap-3">
+                    <div className="min-w-0">
+                      <p className="font-semibold text-ink">
+                        {l.item.name}
+                        {l.variant && <span className="text-muted"> ({l.variant})</span>}
+                      </p>
+                      <p className="mt-0.5 text-sm text-muted">{l.item.originalPrice} EGP each</p>
+                      <button
+                        type="button"
+                        onClick={() => remove(l.key)}
+                        className="sweep-link mt-1 text-xs font-semibold text-muted hover:text-accent"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                    <QtyControl item={l.item} size="sm" />
+                  </li>
+                ))}
+              </ul>
+            </>
           )}
         </div>
 
         {lines.length > 0 && (
           <div className="border-t border-line px-6 py-5">
-            <div className="flex items-baseline justify-between">
+            <div className="flex items-baseline justify-between text-sm text-muted">
+              <span className="font-semibold uppercase tracking-wide">Subtotal ({count})</span>
+              <span>{subtotal} EGP</span>
+            </div>
+            {discount > 0 && (
+              <div className="mt-2 flex items-baseline justify-between text-sm font-semibold text-gold">
+                <span>{discountPercent}% discount</span>
+                <span>-{discount} EGP</span>
+              </div>
+            )}
+            <div className="mt-2 flex items-baseline justify-between text-sm text-muted">
+              <span>Delivery fee</span>
+              {deliveryFee > 0 ? (
+                <span>{deliveryFee} EGP</span>
+              ) : (
+                <span className="font-semibold text-gold">Free</span>
+              )}
+            </div>
+            <div className="mt-3 flex items-baseline justify-between border-t border-line pt-3">
               <span className="text-sm font-semibold uppercase tracking-wide text-muted">
-                Subtotal ({count})
+                Total
               </span>
-              <span className="font-display text-2xl text-gold">{subtotal} EGP</span>
+              <span className="font-display text-2xl text-gold">{grandTotal} EGP</span>
             </div>
 
             <a

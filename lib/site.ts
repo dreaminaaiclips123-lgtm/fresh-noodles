@@ -15,6 +15,9 @@ export const SITE = {
   // No posted hours per branch — plausible delivery window, flagged in
   // PRODUCT.md for the owner to confirm/correct.
   hours: "12:00 PM – 1:00 AM, daily",
+  deliveryFee: 50,
+  // Food total (after discount) at which delivery becomes free.
+  freeDeliveryThreshold: 750,
 } as const;
 
 export type Branch = {

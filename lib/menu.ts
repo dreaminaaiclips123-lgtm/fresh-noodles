@@ -256,21 +256,21 @@ export const MENU: MenuCategory[] = [
         name: "Water",
         description: "Bottled water.",
         originalPrice: 20,
-        price: 19,
+        price: 20,
       },
       {
         id: "v-cola",
         name: "Fi Cola",
         description: "Carbonated soft drink.",
         originalPrice: 35,
-        price: 33,
+        price: 35,
       },
       {
         id: "7-up",
         name: "7 UP",
         description: "Lemon-lime flavored soft drink.",
         originalPrice: 35,
-        price: 33,
+        price: 35,
       },
     ],
   },
@@ -414,6 +414,42 @@ export const MENU: MenuCategory[] = [
       },
     ],
   },
+  {
+    id: "sauces",
+    title: "Sauces",
+    items: [
+      {
+        id: "spicy-sauce",
+        name: "Spicy Sauce",
+        description: "Cooked and seasoned spicy pepper paste.",
+        originalPrice: 25,
+        price: 25,
+        spicy: 1,
+      },
+      {
+        id: "soya-sauce",
+        name: "Soya Sauce",
+        description: "Classic soy dipping sauce.",
+        originalPrice: 25,
+        price: 25,
+      },
+      {
+        id: "japanese-spicy-oil",
+        name: "Japanese Spicy Oil",
+        description: "Spicy oil mixed with sesame oil, Japanese style.",
+        originalPrice: 25,
+        price: 25,
+        spicy: 1,
+      },
+      {
+        id: "teriyaki-sauce",
+        name: "Teriyaki Sauce",
+        description: "Savory, slightly sweet soy-based sauce.",
+        originalPrice: 25,
+        price: 25,
+      },
+    ],
+  },
 ];
 
 export const FEATURED: MenuItem[] = MENU.flatMap((c) =>
@@ -422,11 +458,37 @@ export const FEATURED: MenuItem[] = MENU.flatMap((c) =>
 
 export const ALL_ITEMS: MenuItem[] = MENU.flatMap((c) => c.items);
 
-const discounts = ALL_ITEMS.map((i) =>
-  Math.round((1 - i.price / i.originalPrice) * 100)
+// Drinks and sauces show their full price on the menu, but the cart still
+// gives them the same discount as the dishes.
+const CART_ONLY_DISCOUNT_CATEGORIES = new Set(["drinks", "sauces"]);
+const cartOnlyIds = new Set(
+  MENU.filter((c) => CART_ONLY_DISCOUNT_CATEGORIES.has(c.id)).flatMap((c) =>
+    c.items.map((i) => i.id)
+  )
 );
-const maxDiscount = Math.max(...discounts);
 
-export const DISCOUNT_NOTICE = discounts.every((d) => d === maxDiscount)
+const discountPercent = (i: MenuItem) =>
+  Math.round((1 - i.price / i.originalPrice) * 100);
+
+const dishDiscounts = ALL_ITEMS.filter((i) => !cartOnlyIds.has(i.id)).map(
+  discountPercent
+);
+
+const mostCommon = (xs: number[]) => {
+  const counts = new Map<number, number>();
+  for (const x of xs) counts.set(x, (counts.get(x) ?? 0) + 1);
+  return [...counts].sort((a, b) => b[1] - a[1] || b[0] - a[0])[0][0];
+};
+
+export const SITE_DISCOUNT = mostCommon(dishDiscounts);
+
+export function cartUnitPrice(item: MenuItem): number {
+  if (!cartOnlyIds.has(item.id)) return item.price;
+  return Math.floor(item.originalPrice * (1 - SITE_DISCOUNT / 100) + 0.5);
+}
+
+const maxDiscount = Math.max(...dishDiscounts);
+
+export const DISCOUNT_NOTICE = dishDiscounts.every((d) => d === maxDiscount)
   ? `${maxDiscount}% discount applies to the whole menu`
   : `Up to ${maxDiscount}% off the menu`;

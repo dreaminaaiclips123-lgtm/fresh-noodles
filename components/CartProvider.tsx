@@ -1,14 +1,24 @@
 "use client";
 
 import { createContext, useContext, useMemo, useState } from "react";
-import type { MenuItem } from "@/lib/menu";
+import { cartUnitPrice, type MenuItem } from "@/lib/menu";
+import { SITE } from "@/lib/site";
 
 type CartLine = { key: string; item: MenuItem; variant?: string; qty: number };
 
 type CartContextValue = {
   lines: CartLine[];
   count: number;
+  /** Sum of full (original) prices. */
   subtotal: number;
+  discount: number;
+  discountPercent: number;
+  /** Food total after discount, before delivery. */
+  total: number;
+  deliveryFee: number;
+  /** How much more food total unlocks free delivery (0 once unlocked). */
+  amountToFreeDelivery: number;
+  grandTotal: number;
   isOpen: boolean;
   add: (item: MenuItem, variant?: string) => void;
   remove: (key: string) => void;
@@ -58,10 +68,27 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const clear = () => setLines([]);
 
   const count = useMemo(() => lines.reduce((n, l) => n + l.qty, 0), [lines]);
-  const subtotal = useMemo(
-    () => lines.reduce((n, l) => n + l.item.price * l.qty, 0),
-    [lines]
-  );
+  const { subtotal, discount, discountPercent, total } = useMemo(() => {
+    const subtotal = lines.reduce((n, l) => n + l.item.originalPrice * l.qty, 0);
+    const total = lines.reduce((n, l) => n + cartUnitPrice(l.item) * l.qty, 0);
+    const discount = subtotal - total;
+    const linePercents = new Set(
+      lines.map((l) =>
+        Math.round((1 - cartUnitPrice(l.item) / l.item.originalPrice) * 100)
+      )
+    );
+    const discountPercent =
+      linePercents.size === 1
+        ? [...linePercents][0]
+        : subtotal > 0
+          ? Math.round((discount / subtotal) * 100)
+          : 0;
+    return { subtotal, discount, discountPercent, total };
+  }, [lines]);
+
+  const amountToFreeDelivery = Math.max(0, SITE.freeDeliveryThreshold - total);
+  const deliveryFee = lines.length > 0 && amountToFreeDelivery > 0 ? SITE.deliveryFee : 0;
+  const grandTotal = total + deliveryFee;
 
   return (
     <CartContext.Provider
@@ -69,6 +96,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         lines,
         count,
         subtotal,
+        discount,
+        discountPercent,
+        total,
+        deliveryFee,
+        amountToFreeDelivery,
+        grandTotal,
         isOpen,
         add,
         remove,

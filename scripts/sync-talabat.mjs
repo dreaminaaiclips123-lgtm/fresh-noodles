@@ -1,6 +1,8 @@
 // Syncs lib/menu.ts prices with the live Talabat listing.
 // Rule: website discount = Talabat discount + EXTRA_PERCENT, applied to
-// Talabat's original price. Prints a JSON report; writes only on --write.
+// Talabat's original price. Drinks and sauces are shown at full price; the
+// cart discounts them (see cartUnitPrice in lib/menu.ts).
+// Prints a JSON report; writes only on --write.
 import { readFileSync, writeFileSync } from "node:fs";
 
 const TALABAT_URL = "https://www.talabat.com/egypt/restaurant/1000294/fresh-nodles?aid=9290";
@@ -48,7 +50,22 @@ const NAME_TO_ID = {
   "Steamed Rice": "steamed-rice",
   "Thai Beef Salad": "thai-beef-salad",
   "Korean Chicken Salad": "korean-chicken-salad",
+  "Spicy Sauce": "spicy-sauce",
+  "Soya Sauce": "soya-sauce",
+  "Lauo Japanese Spicy Oil": "japanese-spicy-oil",
+  "Teriyaki Sauce": "teriyaki-sauce",
 };
+
+// Shown at full price on the menu; discounted only in the cart.
+const FULL_PRICE_IDS = new Set([
+  "water",
+  "v-cola",
+  "7-up",
+  "spicy-sauce",
+  "soya-sauce",
+  "japanese-spicy-oil",
+  "teriyaki-sauce",
+]);
 
 function fail(msg) {
   console.log(JSON.stringify({ ok: false, error: msg }, null, 2));
@@ -94,7 +111,7 @@ for (const [name, t] of talabat) {
   }
   matchedIds.add(id);
   const talabatPct = Math.round((1 - t.price / t.original) * 100);
-  const sitePct = talabatPct + EXTRA_PERCENT;
+  const sitePct = FULL_PRICE_IDS.has(id) ? 0 : talabatPct + EXTRA_PERCENT;
   if (sitePct < 0 || sitePct > 90) fail(`bad discount ${sitePct}% for ${name}`);
   const sitePrice = Math.floor(t.original * (1 - sitePct / 100) + 0.5);
 
