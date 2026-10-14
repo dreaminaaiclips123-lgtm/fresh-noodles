@@ -51,6 +51,7 @@ const NAME_TO_ID = {
   "Steamed Rice": "steamed-rice",
   "Thai Beef Salad": "thai-beef-salad",
   "Korean Chicken Salad": "korean-chicken-salad",
+  "Korean Kimchi Salad": "korean-kimchi-salad",
   "Spicy Sauce": "spicy-sauce",
   "Soya Sauce": "soya-sauce",
   "Lauo Japanese Spicy Oil": "japanese-spicy-oil",

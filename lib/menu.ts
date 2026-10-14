@@ -412,6 +412,16 @@ export const MENU: MenuCategory[] = [
         price: 196,
         image: "/menu/korean-chicken-salad.jpg",
       },
+      {
+        id: "korean-kimchi-salad",
+        name: "Korean Kimchi Salad",
+        description:
+          "Spicy Korean kimchi, traditionally fermented, with fresh vegetables.",
+        originalPrice: 100,
+        price: 70,
+        spicy: 1,
+        image: "/menu/korean-kimchi-salad.jpg",
+      },
     ],
   },
   {
