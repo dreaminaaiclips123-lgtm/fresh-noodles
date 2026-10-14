@@ -7,7 +7,8 @@ import { readFileSync, writeFileSync } from "node:fs";
 
 const TALABAT_URL = "https://www.talabat.com/egypt/restaurant/1000294/fresh-nodles?aid=9290";
 const MENU_FILE = new URL("../lib/menu.ts", import.meta.url);
-const EXTRA_PERCENT = 5;
+// Owner asked (2026-10-14) to match Talabat exactly until further notice; set back to 5 when asked.
+const EXTRA_PERCENT = 0;
 
 // Talabat item name -> website item id.
 const NAME_TO_ID = {
