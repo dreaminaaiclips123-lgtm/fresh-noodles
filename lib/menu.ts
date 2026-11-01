@@ -31,6 +31,28 @@ export type MenuCategory = {
 // price applies Talabat's discount plus EXTRA_PERCENT points (see the script).
 export const MENU: MenuCategory[] = [
   {
+    id: "combos",
+    title: "Combo Offers",
+    items: [
+      {
+        id: "noodles-combo-offer",
+        name: "Noodles Combo Offer",
+        description: "Noodles, salad, appetizers and a drink.",
+        originalPrice: 700,
+        price: 490,
+        image: "/menu/noodles-combo-offer.jpg",
+      },
+      {
+        id: "special-combo-offer",
+        name: "Special Combo Offer",
+        description: "Main course, side dish, salad, appetizer, and drink.",
+        originalPrice: 800,
+        price: 560,
+        image: "/menu/special-combo-offer.jpg",
+      },
+    ],
+  },
+  {
     id: "soup",
     title: "Soup",
     items: [
@@ -220,10 +242,10 @@ export const MENU: MenuCategory[] = [
       },
       {
         id: "sichuan-spicy-shrimp",
-        name: "Sichuan Spicy Shrimp",
+        name: "Sichuan Sauce Hot Shrimp",
         description: "Shrimp cooked in a spicy Sichuan-style sauce.",
         originalPrice: 440,
-        price: 374,
+        price: 308,
         spicy: 2,
         image: "/menu/sichuan-spicy-shrimp.jpg",
       },
