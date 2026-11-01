@@ -313,15 +313,14 @@ export const MENU: MenuCategory[] = [
         image: "/menu/bulgogi-noodles.jpg",
       },
       {
-        id: "chicken-noodles",
-        name: "Chicken Noodles",
+        id: "chicken-udon-noodles",
+        name: "Chicken Udon Noodles",
         description:
-          "Egg noodles with vegetables, chicken, and sesame in the Chinese style.",
-        originalPrice: 430,
-        price: 301,
-        tag: "BESTSELLER",
+          "Tender chicken udon noodles stir-fried with crispy fried chicken pieces, bell peppers, onions, and aromatic spices in a savory sauce.",
+        originalPrice: 470,
+        price: 470,
         featured: true,
-        image: "/menu/chicken-noodles.jpg",
+        image: "/menu/chicken-udon-noodles.jpg",
       },
       {
         id: "chicken-ramen-buldak",

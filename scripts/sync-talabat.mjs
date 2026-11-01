@@ -42,7 +42,7 @@ const NAME_TO_ID = {
   "Fi Cola": "v-cola",
   "7 Up": "7-up",
   "Spicy Korean Beef Bulgogi": "spicy-korean-bulgogi-beef",
-  "Chicken Noodles": "chicken-noodles",
+  "Chicken Udon Noodles": "chicken-udon-noodles",
   "Chicken Ramen with Spicy Korean Buldak Sauce": "chicken-ramen-buldak",
   "Japanese Curry Sauce Chicken Ramen": "japanese-curry-chicken-ramen",
   "Fresh Vegetable Noodles": "fresh-vegetable-noodles",
