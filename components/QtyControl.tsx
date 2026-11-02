@@ -22,7 +22,7 @@ export default function QtyControl({
 }) {
   const { add, setQty, qtyFor } = useCart();
   const [picks, setPicks] = useState(
-    () => item.options?.map((o) => o.choices[0]) ?? []
+    () => item.options?.map((o) => o.defaultChoice ?? o.choices[0]) ?? []
   );
   const showOptions = item.options && lineVariant === undefined;
   const variant =

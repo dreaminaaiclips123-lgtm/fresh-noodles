@@ -1,6 +1,8 @@
 export type MenuOption = {
   label: string;
   choices: string[];
+  /** Preselected choice; the first one if not set. */
+  defaultChoice?: string;
 };
 
 export type MenuItem = {
@@ -53,7 +55,7 @@ export const MENU: MenuCategory[] = [
       {
         id: "bao-combo-offer",
         name: "Bao Combo Offer",
-        description: "Shrimp Bao, Chicken Katsu Bao, Beef Bulgogi Bao, Teriyaki Fries and a drink.",
+        description: "Any 3 baos (shrimp, chicken katsu, or beef bulgogi), Teriyaki Fries and a drink.",
         originalPrice: 425,
         price: 298,
         image: "/menu/bao-combo-offer.jpg",
@@ -515,7 +517,24 @@ const OFFER_OPTIONS: Record<string, MenuOption[]> = {
     { label: "Appetizer", choices: choicesFrom("appetizers", "pao") },
     { label: "Drink", choices: choicesFrom("drinks") },
   ],
-  "bao-combo-offer": [{ label: "Drink", choices: choicesFrom("drinks") }],
+  "bao-combo-offer": [
+    {
+      label: "Bao 1",
+      choices: choicesFrom("pao"),
+      defaultChoice: "Dynamite Bao with Shrimp",
+    },
+    {
+      label: "Bao 2",
+      choices: choicesFrom("pao"),
+      defaultChoice: "Chicken Katsu Bao",
+    },
+    {
+      label: "Bao 3",
+      choices: choicesFrom("pao"),
+      defaultChoice: "Beef Bulgogi Bao",
+    },
+    { label: "Drink", choices: choicesFrom("drinks") },
+  ],
   "beef-black-pepper-bundle": [{ label: "Drink", choices: choicesFrom("drinks") }],
 };
 
