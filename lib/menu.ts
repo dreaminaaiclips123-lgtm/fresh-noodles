@@ -32,7 +32,7 @@ export type MenuCategory = {
 export const MENU: MenuCategory[] = [
   {
     id: "combos",
-    title: "Combo Offers",
+    title: "Combos & Bundles",
     items: [
       {
         id: "noodles-combo-offer",
@@ -49,6 +49,24 @@ export const MENU: MenuCategory[] = [
         originalPrice: 800,
         price: 560,
         image: "/menu/special-combo-offer.jpg",
+      },
+      {
+        id: "sweet-sour-chicken-bundle",
+        name: "Sweet & Sour Chicken Bundle",
+        description:
+          "Sweet & sour chicken dish, served with vegetables and salad.",
+        originalPrice: 650,
+        price: 455,
+        options: { label: "Side", choices: ["Rice", "Noodles"] },
+        image: "/menu/sweet-sour-chicken-bundle.jpg",
+      },
+      {
+        id: "beef-black-pepper-bundle",
+        name: "Beef with Black Pepper Bundle",
+        description: "Black pepper beef dish with teriyaki potatoes and a drink.",
+        originalPrice: 715,
+        price: 500,
+        image: "/menu/beef-black-pepper-bundle.jpg",
       },
     ],
   },
@@ -195,24 +213,6 @@ export const MENU: MenuCategory[] = [
         price: 308,
         featured: true,
         image: "/menu/black-pepper-beef.jpg",
-      },
-      {
-        id: "sweet-sour-chicken-bundle",
-        name: "Sweet & Sour Chicken Bundle",
-        description:
-          "Sweet & sour chicken dish, served with vegetables and salad.",
-        originalPrice: 650,
-        price: 455,
-        options: { label: "Side", choices: ["Rice", "Noodles"] },
-        image: "/menu/sweet-sour-chicken-bundle.jpg",
-      },
-      {
-        id: "beef-black-pepper-bundle",
-        name: "Beef with Black Pepper Bundle",
-        description: "Black pepper beef dish with teriyaki potatoes and a drink.",
-        originalPrice: 715,
-        price: 500,
-        image: "/menu/beef-black-pepper-bundle.jpg",
       },
       {
         id: "shrimp-teriyaki-sauce",
