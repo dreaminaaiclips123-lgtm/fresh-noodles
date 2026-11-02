@@ -1,14 +1,15 @@
 "use client";
 
-import { useState } from "react";
 import { IconMinus, IconPlus } from "@tabler/icons-react";
 import { useCart } from "./CartProvider";
+import OfferPicker from "./OfferPicker";
 import type { MenuItem } from "@/lib/menu";
 
 /**
  * "Add" button that turns into a -/qty/+ stepper once the item is in the
  * cart, so a visitor can bump quantity right from the tile/row instead of
- * only seeing a total on the nav's Order Now badge.
+ * only seeing a total on the nav's Order Now badge. Offers with choices open
+ * the OfferPicker instead; in the cart, lineVariant steps that exact line.
  */
 export default function QtyControl({
   item,
@@ -17,17 +18,22 @@ export default function QtyControl({
 }: {
   item: MenuItem;
   size?: "sm" | "md";
-  /** Set in the cart: steps this exact line, with no selectors. */
   lineVariant?: string;
 }) {
+  if (item.options && lineVariant === undefined) return <OfferPicker item={item} />;
+  return <Stepper item={item} size={size} variant={lineVariant} />;
+}
+
+function Stepper({
+  item,
+  size,
+  variant,
+}: {
+  item: MenuItem;
+  size: "sm" | "md";
+  variant?: string;
+}) {
   const { add, setQty, qtyFor } = useCart();
-  const [picks, setPicks] = useState(
-    () => item.options?.map((o) => o.defaultChoice ?? o.choices[0]) ?? []
-  );
-  const showOptions = item.options && lineVariant === undefined;
-  const variant =
-    lineVariant ??
-    item.options?.map((o, i) => `${o.label}: ${picks[i]}`).join(", ");
   const key = variant ? `${item.id}::${variant}` : item.id;
   const qty = qtyFor(item, variant);
 
@@ -35,39 +41,7 @@ export default function QtyControl({
   const iconSize = size === "sm" ? 14 : 18;
 
   return (
-    <div
-      className={
-        showOptions
-          ? "flex w-full flex-wrap items-end justify-end gap-3"
-          : "flex items-center gap-2"
-      }
-    >
-      {showOptions && (
-        <div className="grid min-w-0 flex-1 basis-full grid-cols-1 gap-2 sm:grid-cols-2">
-          {item.options!.map((option, i) => (
-            <label key={option.label} className="min-w-0 text-xs font-semibold text-muted">
-              {option.label}
-              <select
-                value={picks[i]}
-                onChange={(e) =>
-                  setPicks((prev) =>
-                    prev.map((p, j) => (j === i ? e.target.value : p))
-                  )
-                }
-                onClick={(e) => e.stopPropagation()}
-                className="mt-1 block w-full min-w-0 truncate rounded-full border border-line bg-surface-2 px-3 py-1.5 text-sm font-normal text-ink"
-              >
-                {option.choices.map((c) => (
-                  <option key={c} value={c}>
-                    {c}
-                  </option>
-                ))}
-              </select>
-            </label>
-          ))}
-        </div>
-      )}
-
+    <div className="flex items-center gap-2">
       {qty === 0 ? (
         <button
           type="button"

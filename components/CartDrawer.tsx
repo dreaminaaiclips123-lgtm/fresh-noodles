@@ -107,8 +107,14 @@ export default function CartDrawer() {
                     <div className="min-w-0">
                       <p className="font-semibold text-ink">
                         {l.item.name}
-                        {l.variant && <span className="text-muted"> ({l.variant})</span>}
                       </p>
+                      {l.variant && (
+                        <ul className="mt-1 text-sm leading-relaxed text-muted">
+                          {l.variant.split(", ").map((part) => (
+                            <li key={part}>{part}</li>
+                          ))}
+                        </ul>
+                      )}
                       <p className="mt-0.5 text-sm text-muted">{l.item.originalPrice} EGP each</p>
                       <button
                         type="button"

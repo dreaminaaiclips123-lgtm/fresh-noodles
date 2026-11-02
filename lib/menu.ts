@@ -1,8 +1,8 @@
 export type MenuOption = {
   label: string;
   choices: string[];
-  /** Preselected choice; the first one if not set. */
-  defaultChoice?: string;
+  /** Choose this many in any mix (e.g. 3 baos), instead of exactly one. */
+  pick?: number;
 };
 
 export type MenuItem = {
@@ -511,28 +511,14 @@ const OFFER_OPTIONS: Record<string, MenuOption[]> = {
     { label: "Main course", choices: choicesFrom("main-dishes") },
     {
       label: "Side",
-      choices: [...choicesFrom("rice"), "Fresh Vegetable Noodles"],
+      choices: ["Steamed Rice", "Fresh Vegetable Noodles", "Shrimp Fried Rice"],
     },
     { label: "Salad", choices: choicesFrom("salad") },
     { label: "Appetizer", choices: choicesFrom("appetizers", "pao") },
     { label: "Drink", choices: choicesFrom("drinks") },
   ],
   "bao-combo-offer": [
-    {
-      label: "Bao 1",
-      choices: choicesFrom("pao"),
-      defaultChoice: "Dynamite Bao with Shrimp",
-    },
-    {
-      label: "Bao 2",
-      choices: choicesFrom("pao"),
-      defaultChoice: "Chicken Katsu Bao",
-    },
-    {
-      label: "Bao 3",
-      choices: choicesFrom("pao"),
-      defaultChoice: "Beef Bulgogi Bao",
-    },
+    { label: "Baos", choices: choicesFrom("pao"), pick: 3 },
     { label: "Drink", choices: choicesFrom("drinks") },
   ],
   "beef-black-pepper-bundle": [{ label: "Drink", choices: choicesFrom("drinks") }],
@@ -547,6 +533,9 @@ export const FEATURED: MenuItem[] = MENU.flatMap((c) =>
 );
 
 export const ALL_ITEMS: MenuItem[] = MENU.flatMap((c) => c.items);
+
+export const choiceImage = (name: string) =>
+  ALL_ITEMS.find((i) => i.name === name)?.image;
 
 // Drinks and sauces show their full price on the menu, but the cart still
 // gives them the same discount as the dishes.
