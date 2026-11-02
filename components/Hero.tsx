@@ -45,11 +45,6 @@ export default function Hero() {
               <p className="font-display text-3xl text-ink">Asian Fusion</p>
               <p className="text-sm text-muted">Menu</p>
             </div>
-            <div className="h-10 w-px bg-line" aria-hidden />
-            <div>
-              <p className="font-display text-3xl text-ink">Grand Opening</p>
-              <p className="text-sm text-muted">20% off this month</p>
-            </div>
           </div>
         </div>
 

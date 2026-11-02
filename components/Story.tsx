@@ -4,7 +4,6 @@ import Reveal from "./Reveal";
 const STATS = [
   { value: "Asian", label: "Fusion menu" },
   { value: "Tossed", label: "To order" },
-  { value: "Grand", label: "Opening special" },
 ] as const;
 
 export default function Story() {
@@ -30,7 +29,7 @@ export default function Story() {
           </p>
         </Reveal>
 
-        <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-3">
+        <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2">
           {STATS.map((s, i) => (
             <Reveal key={s.label} delay={i * 80}>
               <div className="rounded-2xl border border-line px-6 py-8 text-center">
