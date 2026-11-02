@@ -118,7 +118,7 @@ export default function CartDrawer() {
                         Remove
                       </button>
                     </div>
-                    <QtyControl item={l.item} size="sm" />
+                    <QtyControl item={l.item} size="sm" lineVariant={l.variant} />
                   </li>
                 ))}
               </ul>

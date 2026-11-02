@@ -8,7 +8,7 @@ import type { MenuItem } from "@/lib/menu";
 
 export default function MenuItemCard({ item }: { item: MenuItem }) {
   return (
-    <div className="menu-card flex items-center justify-between gap-4 rounded-2xl border border-line bg-surface p-5">
+    <div className="menu-card flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-line bg-surface p-5">
       <div className="flex min-w-0 items-center gap-4">
         {item.image && (
           <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-xl">

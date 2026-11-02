@@ -16,8 +16,8 @@ export type MenuItem = {
   /** Has a real matching photo — shown as a tile on the homepage menu. */
   featured?: boolean;
   image?: string;
-  /** e.g. choice of rice or noodles — shown as a selector before adding to cart. */
-  options?: MenuOption;
+  /** e.g. choice of rice or noodles — one selector each, shown before adding to cart. */
+  options?: MenuOption[];
 };
 
 export type MenuCategory = {
@@ -65,7 +65,7 @@ export const MENU: MenuCategory[] = [
           "Sweet & sour chicken dish, served with vegetables and salad.",
         originalPrice: 650,
         price: 455,
-        options: { label: "Side", choices: ["Rice", "Noodles"] },
+        options: [{ label: "Side", choices: ["Rice", "Noodles"] }],
         image: "/menu/sweet-sour-chicken-bundle.jpg",
       },
       {
@@ -490,6 +490,38 @@ export const MENU: MenuCategory[] = [
     ],
   },
 ];
+
+const choicesFrom = (...categoryIds: string[]) =>
+  categoryIds.flatMap(
+    (id) => MENU.find((c) => c.id === id)?.items.map((i) => i.name) ?? []
+  );
+
+// What customers pick inside each offer. Built from the menu so renamed or
+// removed dishes stay in step.
+const OFFER_OPTIONS: Record<string, MenuOption[]> = {
+  "noodles-combo-offer": [
+    { label: "Noodles", choices: choicesFrom("noodles") },
+    { label: "Salad", choices: choicesFrom("salad") },
+    { label: "Appetizer", choices: choicesFrom("appetizers", "pao") },
+    { label: "Drink", choices: choicesFrom("drinks") },
+  ],
+  "special-combo-offer": [
+    { label: "Main course", choices: choicesFrom("main-dishes") },
+    {
+      label: "Side",
+      choices: [...choicesFrom("rice"), "Fresh Vegetable Noodles"],
+    },
+    { label: "Salad", choices: choicesFrom("salad") },
+    { label: "Appetizer", choices: choicesFrom("appetizers", "pao") },
+    { label: "Drink", choices: choicesFrom("drinks") },
+  ],
+  "bao-combo-offer": [{ label: "Drink", choices: choicesFrom("drinks") }],
+  "beef-black-pepper-bundle": [{ label: "Drink", choices: choicesFrom("drinks") }],
+};
+
+for (const item of MENU.flatMap((c) => c.items)) {
+  if (OFFER_OPTIONS[item.id]) item.options = OFFER_OPTIONS[item.id];
+}
 
 export const FEATURED: MenuItem[] = MENU.flatMap((c) =>
   c.items.filter((i) => i.featured)
