@@ -36,6 +36,7 @@ const NAME_TO_ID = {
   "Sichuan Sauce Hot Shrimp": "sichuan-spicy-shrimp",
   "Noodles Combo Offer": "noodles-combo-offer",
   "Special Combo Offer": "special-combo-offer",
+  "Bao Combo Offer": "bao-combo-offer",
   "Sweet and Sour Shrimp": "sweet-and-sour-shrimp",
   "Indian Chicken Curry": "indian-chicken-curry",
   "Water": "water",

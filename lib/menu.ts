@@ -51,6 +51,14 @@ export const MENU: MenuCategory[] = [
         image: "/menu/special-combo-offer.jpg",
       },
       {
+        id: "bao-combo-offer",
+        name: "Bao Combo Offer",
+        description: "Shrimp Bao, Chicken Katsu Bao, Beef Bulgogi Bao, Teriyaki Fries and a drink.",
+        originalPrice: 425,
+        price: 298,
+        image: "/menu/bao-combo-offer.jpg",
+      },
+      {
         id: "sweet-sour-chicken-bundle",
         name: "Sweet & Sour Chicken Bundle",
         description:
