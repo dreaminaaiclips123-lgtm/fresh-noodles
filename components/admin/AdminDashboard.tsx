@@ -127,6 +127,77 @@ function TelegramPanel({ telegram, onLinked }: { telegram: Stats["telegram"]; on
   );
 }
 
+function ResetPanel({ onReset }: { onReset: () => void }) {
+  const [asking, setAsking] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const [message, setMessage] = useState("");
+
+  const reset = async () => {
+    setBusy(true);
+    setMessage("");
+    try {
+      const res = await fetch("/api/admin/reset", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ confirm: "RESET" }),
+      });
+      const data = await res.json();
+      setMessage(res.ok ? "Stats cleared." : data.error);
+      if (res.ok) onReset();
+    } catch {
+      setMessage("Couldn't reach the site. Check your connection.");
+    }
+    setAsking(false);
+    setBusy(false);
+  };
+
+  return (
+    <section className="mt-10 border-t border-line pt-6 pb-10">
+      <h2 className="font-display text-2xl tracking-wide text-ink">Reset stats</h2>
+      <p className="mt-2 text-sm text-muted">
+        Permanently clears visits, orders, and rankings. Telegram stays connected.
+      </p>
+      {asking ? (
+        <div className="mt-4 flex flex-wrap items-center gap-3">
+          <p className="w-full text-sm font-semibold text-gold">Clear all stats? This can&apos;t be undone.</p>
+          <button
+            type="button"
+            onClick={reset}
+            disabled={busy}
+            className="pressable min-h-11 rounded-full bg-accent px-5 text-sm font-bold text-accent-ink disabled:opacity-60"
+          >
+            {busy ? "Clearing" : "Yes, clear everything"}
+          </button>
+          <button
+            type="button"
+            onClick={() => setAsking(false)}
+            disabled={busy}
+            className="pressable min-h-11 rounded-full border border-line px-5 text-sm font-bold text-ink hover:border-gold"
+          >
+            Cancel
+          </button>
+        </div>
+      ) : (
+        <button
+          type="button"
+          onClick={() => {
+            setMessage("");
+            setAsking(true);
+          }}
+          className="pressable mt-4 min-h-11 rounded-full border border-line px-5 text-sm font-bold text-ink hover:border-gold"
+        >
+          Reset stats
+        </button>
+      )}
+      {message && (
+        <p role="status" className="mt-3 text-sm font-semibold text-gold">
+          {message}
+        </p>
+      )}
+    </section>
+  );
+}
+
 export default function AdminDashboard() {
   const [stats, setStats] = useState<Stats | null>(null);
   const [week, setWeek] = useState("");
@@ -356,6 +427,8 @@ export default function AdminDashboard() {
           <div className="mt-14">
             <TelegramPanel telegram={stats.telegram} onLinked={load} />
           </div>
+
+          <ResetPanel onReset={load} />
         </>
       )}
     </div>
