@@ -6,6 +6,7 @@ import { useCart } from "./CartProvider";
 import QtyControl from "./QtyControl";
 import FreeDeliveryProgress from "./FreeDeliveryProgress";
 import { SITE } from "@/lib/site";
+import { post, sessionId } from "@/lib/analytics/client";
 
 function buildWhatsAppMessage(
   lines: { item: { name: string; originalPrice: number }; variant?: string; qty: number }[],
@@ -163,6 +164,12 @@ export default function CartDrawer() {
               href={waHref}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() =>
+                post("/api/order-event", {
+                  sid: sessionId(),
+                  lines: lines.map((l) => ({ id: l.item.id, variant: l.variant, qty: l.qty })),
+                })
+              }
               className="pressable mt-5 flex w-full items-center justify-center gap-2 rounded-full bg-accent px-6 py-4 text-base font-bold text-accent-ink"
             >
               <IconBrandWhatsapp size={22} aria-hidden />

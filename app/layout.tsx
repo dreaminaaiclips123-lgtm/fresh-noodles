@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import { CartProvider } from "@/components/CartProvider";
 import CartDrawer from "@/components/CartDrawer";
 import FloatingCartBar from "@/components/FloatingCartBar";
+import SiteShell from "@/components/SiteShell";
 
 const bebas = Bebas_Neue({
   variable: "--font-bebas",
@@ -45,11 +46,18 @@ export default function RootLayout({
     <html lang="en" className={`${bebas.variable} ${inter.variable}`}>
       <body className="grain antialiased">
         <CartProvider>
-          <Nav />
-          <main>{children}</main>
-          <Footer />
-          <CartDrawer />
-          <FloatingCartBar />
+          <SiteShell
+            top={<Nav />}
+            bottom={
+              <>
+                <Footer />
+                <CartDrawer />
+                <FloatingCartBar />
+              </>
+            }
+          >
+            {children}
+          </SiteShell>
         </CartProvider>
       </body>
     </html>
