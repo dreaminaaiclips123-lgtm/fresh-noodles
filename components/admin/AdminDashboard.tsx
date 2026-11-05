@@ -115,14 +115,14 @@ function TelegramPanel({ telegram, onLinked }: { telegram: Stats["telegram"]; on
             ? t.alertsOn
             : t.alertsOff}
       </p>
-      {telegram.tokenSet && (
+      {telegram.tokenSet && !telegram.linked && (
         <button
           type="button"
           onClick={link}
           disabled={busy}
           className="pressable mt-4 min-h-11 rounded-full border border-line px-5 text-sm font-bold text-ink hover:border-gold disabled:opacity-60"
         >
-          {telegram.linked ? t.reconnect : t.connect}
+          {t.connect}
         </button>
       )}
       {message && (
