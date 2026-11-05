@@ -1,6 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import type { AdminStrings } from "@/lib/admin-i18n";
+import { LanguageButton, useAdminStrings } from "./AdminFrame";
 
 const PULSE_MS = 5_000;
 // Slower checks on a screen nobody is touching, and a full reload now and then
@@ -36,34 +38,38 @@ type Stats = {
   telegram: { tokenSet: boolean; linked: boolean };
 };
 
-const shortDate = (day: string) =>
-  new Date(`${day}T12:00:00Z`).toLocaleDateString("en-GB", {
+const shortDate = (day: string, t: AdminStrings) =>
+  new Date(`${day}T12:00:00Z`).toLocaleDateString(t.locale, {
     weekday: "short",
     day: "numeric",
     month: "short",
     timeZone: "UTC",
   });
 
-const orderTime = (at: number) =>
-  new Date(at).toLocaleString("en-GB", {
+const orderTime = (at: number, t: AdminStrings) =>
+  new Date(at).toLocaleString(t.locale, {
     weekday: "short",
     hour: "2-digit",
     minute: "2-digit",
     timeZone: "Africa/Cairo",
   });
 
-function avgTime({ visits, seconds }: { visits: number; seconds: number }) {
+const money = (amount: number, t: AdminStrings) =>
+  `${amount.toLocaleString("en-US")} ${t.currency}`;
+
+function avgTime({ visits, seconds }: { visits: number; seconds: number }, t: AdminStrings) {
   if (!visits) return "–";
   const avg = Math.round(seconds / visits);
-  return `${Math.floor(avg / 60)}m ${String(avg % 60).padStart(2, "0")}s`;
+  return `${Math.floor(avg / 60)}${t.minuteUnit} ${String(avg % 60).padStart(2, "0")}${t.secondUnit}`;
 }
 
 function Summary({ title, totals }: { title: string; totals: Totals }) {
+  const { t } = useAdminStrings();
   const rows = [
-    ["Visits", totals.visits.toLocaleString()],
-    ["Average time", avgTime(totals)],
-    ["Orders", totals.orders.toLocaleString()],
-    ["Order value", `${totals.revenue.toLocaleString()} EGP`],
+    [t.visits, totals.visits.toLocaleString("en-US")],
+    [t.averageTime, avgTime(totals, t)],
+    [t.orders, totals.orders.toLocaleString("en-US")],
+    [t.orderValue, money(totals.revenue, t)],
   ];
   return (
     <section>
@@ -81,6 +87,7 @@ function Summary({ title, totals }: { title: string; totals: Totals }) {
 }
 
 function TelegramPanel({ telegram, onLinked }: { telegram: Stats["telegram"]; onLinked: () => void }) {
+  const { t } = useAdminStrings();
   const [message, setMessage] = useState("");
   const [busy, setBusy] = useState(false);
 
@@ -90,23 +97,23 @@ function TelegramPanel({ telegram, onLinked }: { telegram: Stats["telegram"]; on
     try {
       const res = await fetch("/api/admin/telegram", { method: "POST" });
       const data = await res.json();
-      setMessage(res.ok ? "Done. Check Telegram for a test message." : data.error);
+      setMessage(res.ok ? t.telegramDone : (t.serverErrors[data.error] ?? data.error));
       if (res.ok) onLinked();
     } catch {
-      setMessage("Couldn't reach the site. Check your connection.");
+      setMessage(t.connectionError);
     }
     setBusy(false);
   };
 
   return (
     <section className="border-t border-line pt-6">
-      <h2 className="font-display text-2xl tracking-wide text-ink">Order alerts</h2>
+      <h2 className="font-display text-2xl tracking-wide text-ink">{t.orderAlerts}</h2>
       <p className="mt-2 text-sm text-muted">
         {!telegram.tokenSet
-          ? "Telegram bot token isn't set yet."
+          ? t.tokenMissing
           : telegram.linked
-            ? "On. Telegram alerts are going to your chat."
-            : "Off. Send your bot any message in Telegram, then press Connect."}
+            ? t.alertsOn
+            : t.alertsOff}
       </p>
       {telegram.tokenSet && (
         <button
@@ -115,7 +122,7 @@ function TelegramPanel({ telegram, onLinked }: { telegram: Stats["telegram"]; on
           disabled={busy}
           className="pressable mt-4 min-h-11 rounded-full border border-line px-5 text-sm font-bold text-ink hover:border-gold disabled:opacity-60"
         >
-          {telegram.linked ? "Reconnect and send test" : "Connect Telegram"}
+          {telegram.linked ? t.reconnect : t.connect}
         </button>
       )}
       {message && (
@@ -128,6 +135,7 @@ function TelegramPanel({ telegram, onLinked }: { telegram: Stats["telegram"]; on
 }
 
 function ResetPanel({ onReset }: { onReset: () => void }) {
+  const { t } = useAdminStrings();
   const [asking, setAsking] = useState(false);
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
@@ -142,10 +150,10 @@ function ResetPanel({ onReset }: { onReset: () => void }) {
         body: JSON.stringify({ confirm: "RESET" }),
       });
       const data = await res.json();
-      setMessage(res.ok ? "Stats cleared." : data.error);
+      setMessage(res.ok ? t.statsCleared : (t.serverErrors[data.error] ?? data.error));
       if (res.ok) onReset();
     } catch {
-      setMessage("Couldn't reach the site. Check your connection.");
+      setMessage(t.connectionError);
     }
     setAsking(false);
     setBusy(false);
@@ -153,20 +161,20 @@ function ResetPanel({ onReset }: { onReset: () => void }) {
 
   return (
     <section className="mt-10 border-t border-line pt-6 pb-10">
-      <h2 className="font-display text-2xl tracking-wide text-ink">Reset stats</h2>
+      <h2 className="font-display text-2xl tracking-wide text-ink">{t.resetTitle}</h2>
       <p className="mt-2 text-sm text-muted">
-        Permanently clears visits, orders, and rankings. Telegram stays connected.
+        {t.resetNote}
       </p>
       {asking ? (
         <div className="mt-4 flex flex-wrap items-center gap-3">
-          <p className="w-full text-sm font-semibold text-gold">Clear all stats? This can&apos;t be undone.</p>
+          <p className="w-full text-sm font-semibold text-gold">{t.resetAsk}</p>
           <button
             type="button"
             onClick={reset}
             disabled={busy}
             className="pressable min-h-11 rounded-full bg-accent px-5 text-sm font-bold text-accent-ink disabled:opacity-60"
           >
-            {busy ? "Clearing" : "Yes, clear everything"}
+            {busy ? t.resetBusy : t.resetYes}
           </button>
           <button
             type="button"
@@ -174,7 +182,7 @@ function ResetPanel({ onReset }: { onReset: () => void }) {
             disabled={busy}
             className="pressable min-h-11 rounded-full border border-line px-5 text-sm font-bold text-ink hover:border-gold"
           >
-            Cancel
+            {t.cancel}
           </button>
         </div>
       ) : (
@@ -186,7 +194,7 @@ function ResetPanel({ onReset }: { onReset: () => void }) {
           }}
           className="pressable mt-4 min-h-11 rounded-full border border-line px-5 text-sm font-bold text-ink hover:border-gold"
         >
-          Reset stats
+          {t.resetTitle}
         </button>
       )}
       {message && (
@@ -199,6 +207,7 @@ function ResetPanel({ onReset }: { onReset: () => void }) {
 }
 
 export default function AdminDashboard() {
+  const { t } = useAdminStrings();
   const [stats, setStats] = useState<Stats | null>(null);
   const [week, setWeek] = useState("");
   const [failed, setFailed] = useState(false);
@@ -293,47 +302,50 @@ export default function AdminDashboard() {
   return (
     <div className="mx-auto max-w-5xl px-5 py-8 sm:px-10">
       <header className="flex items-center justify-between gap-4">
-        <p className="font-display text-2xl tracking-wide text-accent">Fresh Noodles Admin</p>
-        <button type="button" onClick={signOut} className="sweep-link text-sm font-semibold text-muted">
-          Sign out
-        </button>
+        <p className="font-display text-2xl tracking-wide text-accent">{t.dashboardTitle}</p>
+        <div className="flex shrink-0 items-center gap-4">
+          <LanguageButton />
+          <button type="button" onClick={signOut} className="sweep-link text-sm font-semibold text-muted">
+            {t.signOut}
+          </button>
+        </div>
       </header>
 
       {newOrder !== null && (
         <p role="status" className="mt-6 rounded-xl bg-gold px-4 py-3 text-sm font-bold text-gold-ink">
-          New order: {newOrder} EGP
+          {t.newOrder}: {money(newOrder, t)}
         </p>
       )}
 
       {failed && (
         <p role="alert" className="mt-6 rounded-xl border border-gold px-4 py-3 text-sm font-semibold text-gold">
-          Couldn&apos;t load new numbers. Retrying automatically.
+          {t.loadFailed}
         </p>
       )}
 
       {!stats ? (
-        !failed && <p className="mt-16 text-muted">Loading</p>
+        !failed && <p className="mt-16 text-muted">{t.loading}</p>
       ) : (
         <>
           <section className="mt-10">
             <p className="font-display text-[clamp(5rem,20vw,9rem)] leading-none text-gold tabular-nums">
               {stats.live}
             </p>
-            <h1 className="mt-1 text-lg font-semibold text-ink">Viewing the site now</h1>
-            <p className="text-sm text-muted">Active in the last 45 seconds. Updates live.</p>
+            <h1 className="mt-1 text-lg font-semibold text-ink">{t.viewingNow}</h1>
+            <p className="text-sm text-muted">{t.viewingNote}</p>
           </section>
 
           <div className="mt-12 grid gap-10 sm:grid-cols-2">
-            <Summary title="Today" totals={stats.today} />
-            <Summary title="This week" totals={stats.thisWeek} />
+            <Summary title={t.today} totals={stats.today} />
+            <Summary title={t.thisWeek} totals={stats.thisWeek} />
           </div>
 
           <div className="mt-14 grid gap-10 lg:grid-cols-2">
             <section>
               <div className="flex flex-wrap items-center justify-between gap-3">
-                <h2 className="font-display text-2xl tracking-wide text-ink">Most ordered</h2>
+                <h2 className="font-display text-2xl tracking-wide text-ink">{t.mostOrdered}</h2>
                 <label className="text-sm text-muted">
-                  <span className="sr-only">Week starting</span>
+                  <span className="sr-only">{t.weekStarting}</span>
                   <select
                     value={stats.week}
                     onChange={(e) => setWeek(e.target.value)}
@@ -341,14 +353,14 @@ export default function AdminDashboard() {
                   >
                     {stats.weeks.map((w, i) => (
                       <option key={w} value={w}>
-                        {i === 0 ? "This week" : `Week of ${shortDate(w)}`}
+                        {i === 0 ? t.thisWeek : `${t.weekOf} ${shortDate(w, t)}`}
                       </option>
                     ))}
                   </select>
                 </label>
               </div>
               {stats.items.length === 0 ? (
-                <p className="mt-4 border-t border-line pt-4 text-sm text-muted">No orders this week yet.</p>
+                <p className="mt-4 border-t border-line pt-4 text-sm text-muted">{t.noOrdersThisWeek}</p>
               ) : (
                 <ol className="mt-3 border-t border-line">
                   {stats.items.map((item, i) => (
@@ -363,16 +375,16 @@ export default function AdminDashboard() {
             </section>
 
             <section>
-              <h2 className="font-display text-2xl tracking-wide text-ink">Recent orders</h2>
+              <h2 className="font-display text-2xl tracking-wide text-ink">{t.recentOrders}</h2>
               {stats.recent.length === 0 ? (
-                <p className="mt-4 border-t border-line pt-4 text-sm text-muted">No orders yet.</p>
+                <p className="mt-4 border-t border-line pt-4 text-sm text-muted">{t.noOrdersYet}</p>
               ) : (
                 <ul className="mt-3 border-t border-line">
                   {stats.recent.map((order) => (
                     <li key={order.at} className="border-b border-line py-3">
                       <div className="flex items-baseline justify-between gap-3">
-                        <span className="text-sm text-muted">{orderTime(order.at)}</span>
-                        <span className="font-semibold tabular-nums text-ink">{order.total} EGP</span>
+                        <span className="text-sm text-muted">{orderTime(order.at, t)}</span>
+                        <span className="font-semibold tabular-nums text-ink">{money(order.total, t)}</span>
                       </div>
                       <ul className="mt-1 text-sm text-ink">
                         {order.lines.map((line, i) => (
@@ -389,19 +401,19 @@ export default function AdminDashboard() {
                 </ul>
               )}
               <p className="mt-3 text-xs text-muted">
-                Counts presses of Send on the website. A customer may still not send the WhatsApp message.
+                {t.sendNote}
               </p>
             </section>
           </div>
 
           <section className="mt-14">
-            <h2 className="font-display text-2xl tracking-wide text-ink">Last 7 days</h2>
+            <h2 className="font-display text-2xl tracking-wide text-ink">{t.last7Days}</h2>
             <div className="mt-3 overflow-x-auto">
-              <table className="w-full min-w-[34rem] text-left text-sm">
+              <table className="w-full min-w-[34rem] text-start text-sm">
                 <thead className="text-muted">
                   <tr className="border-y border-line">
-                    {["Day", "Visits", "Avg time", "Home views", "Order page views", "Orders", "Value"].map((h) => (
-                      <th key={h} scope="col" className="py-2 pr-4 font-semibold">
+                    {[t.day, t.visits, t.avgTime, t.homeViews, t.orderPageViews, t.orders, t.value].map((h) => (
+                      <th key={h} scope="col" className="py-2 pe-4 text-start font-semibold">
                         {h}
                       </th>
                     ))}
@@ -410,13 +422,13 @@ export default function AdminDashboard() {
                 <tbody className="tabular-nums text-ink">
                   {stats.days.map((d) => (
                     <tr key={d.day} className="border-b border-line">
-                      <th scope="row" className="py-2.5 pr-4 font-medium">{shortDate(d.day)}</th>
-                      <td className="pr-4">{d.visits}</td>
-                      <td className="pr-4">{avgTime(d)}</td>
-                      <td className="pr-4">{d.home}</td>
-                      <td className="pr-4">{d.order}</td>
-                      <td className="pr-4">{d.orders}</td>
-                      <td>{d.revenue.toLocaleString()} EGP</td>
+                      <th scope="row" className="py-2.5 pe-4 text-start font-medium">{shortDate(d.day, t)}</th>
+                      <td className="pe-4">{d.visits}</td>
+                      <td className="pe-4">{avgTime(d, t)}</td>
+                      <td className="pe-4">{d.home}</td>
+                      <td className="pe-4">{d.order}</td>
+                      <td className="pe-4">{d.orders}</td>
+                      <td>{money(d.revenue, t)}</td>
                     </tr>
                   ))}
                 </tbody>

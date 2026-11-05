@@ -164,6 +164,19 @@ body {
   }
 }
 
+/* ---------- Admin in Arabic: the brand fonts have no Arabic letters, and
+   letter spacing would break the joins between them ---------- */
+
+.admin-ar {
+  --font-display: var(--font-arabic);
+  --font-sans: var(--font-arabic);
+  font-family: var(--font-arabic);
+}
+
+.admin-ar .tracking-wide {
+  letter-spacing: normal;
+}
+
 /* ---------- Accent underline sweep ---------- */
 
 .sweep-link {
