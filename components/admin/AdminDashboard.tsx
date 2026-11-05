@@ -1,8 +1,14 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
-const REFRESH_MS = 15_000;
+const PULSE_MS = 5_000;
+// Slower checks on a screen nobody is touching, and a full reload now and then
+// so average time stays current.
+const IDLE_AFTER_MS = 20 * 60_000;
+const IDLE_EVERY_TICKS = 6;
+const FULL_LOAD_EVERY_TICKS = 12;
+const NEW_ORDER_BANNER_MS = 15_000;
 
 type Day = {
   day: string;
@@ -125,29 +131,88 @@ export default function AdminDashboard() {
   const [stats, setStats] = useState<Stats | null>(null);
   const [week, setWeek] = useState("");
   const [failed, setFailed] = useState(false);
+  const [newOrder, setNewOrder] = useState<number | null>(null);
+  const lastStamp = useRef<string | null>(null);
+  const newestOrderAt = useRef<number | null>(null);
 
   const load = useCallback(async () => {
     try {
       const res = await fetch(`/api/admin/stats${week ? `?week=${week}` : ""}`);
       if (res.status === 401) return window.location.reload();
       if (!res.ok) throw new Error();
-      setStats(await res.json());
+      const data: Stats = await res.json();
+      setStats(data);
       setFailed(false);
+      const newest = data.recent[0];
+      if (newestOrderAt.current !== null && newest && newest.at > newestOrderAt.current) {
+        setNewOrder(newest.total);
+      }
+      newestOrderAt.current = newest?.at ?? newestOrderAt.current ?? 0;
     } catch {
       setFailed(true);
     }
   }, [week]);
 
+  const pulse = useCallback(async () => {
+    try {
+      const res = await fetch("/api/admin/pulse");
+      if (res.status === 401) return window.location.reload();
+      if (!res.ok) throw new Error();
+      const { live, stamp }: { live: number; stamp: string } = await res.json();
+      setStats((prev) => prev && { ...prev, live });
+      setFailed(false);
+      if (lastStamp.current !== null && lastStamp.current !== stamp) void load();
+      lastStamp.current = stamp;
+    } catch {
+      setFailed(true);
+    }
+  }, [load]);
+
   useEffect(() => {
-    const first = setTimeout(load, 0);
+    let lastActive = Date.now();
+    let ticks = 0;
+    const markActive = () => {
+      lastActive = Date.now();
+    };
+    const refreshNow = () => {
+      if (document.visibilityState === "visible") {
+        markActive();
+        void load();
+      }
+    };
+
+    const first = setTimeout(() => {
+      void load();
+      void pulse();
+    }, 0);
     const timer = setInterval(() => {
-      if (document.visibilityState === "visible") void load();
-    }, REFRESH_MS);
+      if (document.visibilityState !== "visible") return;
+      ticks += 1;
+      const idle = Date.now() - lastActive > IDLE_AFTER_MS;
+      if (idle && ticks % IDLE_EVERY_TICKS !== 0) return;
+      if (ticks % FULL_LOAD_EVERY_TICKS === 0) void load();
+      void pulse();
+    }, PULSE_MS);
+
+    document.addEventListener("visibilitychange", refreshNow);
+    window.addEventListener("focus", refreshNow);
+    window.addEventListener("pointerdown", markActive, { passive: true });
+    window.addEventListener("keydown", markActive);
     return () => {
       clearTimeout(first);
       clearInterval(timer);
+      document.removeEventListener("visibilitychange", refreshNow);
+      window.removeEventListener("focus", refreshNow);
+      window.removeEventListener("pointerdown", markActive);
+      window.removeEventListener("keydown", markActive);
     };
-  }, [load]);
+  }, [load, pulse]);
+
+  useEffect(() => {
+    if (newOrder === null) return;
+    const clear = setTimeout(() => setNewOrder(null), NEW_ORDER_BANNER_MS);
+    return () => clearTimeout(clear);
+  }, [newOrder]);
 
   const signOut = async () => {
     await fetch("/api/admin/logout", { method: "POST" }).catch(() => {});
@@ -162,6 +227,12 @@ export default function AdminDashboard() {
           Sign out
         </button>
       </header>
+
+      {newOrder !== null && (
+        <p role="status" className="mt-6 rounded-xl bg-gold px-4 py-3 text-sm font-bold text-gold-ink">
+          New order: {newOrder} EGP
+        </p>
+      )}
 
       {failed && (
         <p role="alert" className="mt-6 rounded-xl border border-gold px-4 py-3 text-sm font-semibold text-gold">
@@ -178,7 +249,7 @@ export default function AdminDashboard() {
               {stats.live}
             </p>
             <h1 className="mt-1 text-lg font-semibold text-ink">Viewing the site now</h1>
-            <p className="text-sm text-muted">Active in the last 45 seconds. Updates every 15 seconds.</p>
+            <p className="text-sm text-muted">Active in the last 45 seconds. Updates live.</p>
           </section>
 
           <div className="mt-12 grid gap-10 sm:grid-cols-2">
