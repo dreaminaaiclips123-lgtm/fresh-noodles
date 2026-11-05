@@ -110,8 +110,9 @@ export async function POST(req: Request) {
     if (telegramReady() && chatId && alertsThisHour <= MAX_ALERTS_PER_HOUR) {
       await sendTelegram(String(chatId), alertText(lines, food, delivery));
     }
-  } catch {
+  } catch (err) {
     // The customer is already on their way to WhatsApp; nothing to show them.
+    console.error("Order event failed:", err instanceof Error ? err.message : "unknown");
   }
   return done();
 }

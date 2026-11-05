@@ -1,6 +1,16 @@
-const token = process.env.TELEGRAM_BOT_TOKEN;
+const token = process.env.TELEGRAM_BOT_TOKEN?.trim();
 
 export const telegramReady = () => Boolean(token);
+
+export class TelegramError extends Error {
+  constructor(
+    method: string,
+    public code: number,
+    description: string
+  ) {
+    super(`Telegram ${method} failed: ${code} ${description}`);
+  }
+}
 
 async function call(method: string, body: object) {
   const res = await fetch(`https://api.telegram.org/bot${token}/${method}`, {
@@ -11,7 +21,7 @@ async function call(method: string, body: object) {
     signal: AbortSignal.timeout(4000),
   });
   const data = await res.json();
-  if (!data.ok) throw new Error(`Telegram ${method} failed`);
+  if (!data.ok) throw new TelegramError(method, data.error_code, data.description);
   return data.result;
 }
 

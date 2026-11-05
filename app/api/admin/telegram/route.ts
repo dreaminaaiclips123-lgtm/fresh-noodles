@@ -1,6 +1,6 @@
 import { isAdmin } from "@/lib/analytics/auth";
 import { keys, run, sameOrigin } from "@/lib/analytics/store";
-import { latestChatId, sendTelegram, telegramReady } from "@/lib/analytics/telegram";
+import { TelegramError, latestChatId, sendTelegram, telegramReady } from "@/lib/analytics/telegram";
 
 export async function POST(req: Request) {
   if (!sameOrigin(req) || !(await isAdmin())) {
@@ -20,7 +20,14 @@ export async function POST(req: Request) {
     await run([["SET", keys.telegramChat, chatId]]);
     await sendTelegram(chatId, "Fresh Noodles alerts are on. You'll get a message here when someone presses Send on the website.");
     return Response.json({ ok: true });
-  } catch {
-    return Response.json({ error: "Telegram didn't respond. Try again." }, { status: 502 });
+  } catch (err) {
+    console.error("Telegram link failed:", err instanceof Error ? err.message : "unknown");
+    const error =
+      err instanceof TelegramError && (err.code === 401 || err.code === 404)
+        ? "Telegram rejected the bot token. Copy it again from @BotFather and replace TELEGRAM_BOT_TOKEN in Vercel."
+        : err instanceof TelegramError
+          ? err.message
+          : "Telegram didn't respond. Try again.";
+    return Response.json({ error }, { status: 502 });
   }
 }
