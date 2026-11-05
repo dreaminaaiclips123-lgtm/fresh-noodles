@@ -1,6 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import { Analytics } from "@vercel/analytics/next";
 import SiteTracker from "./SiteTracker";
 
 /** The admin page is its own screen, without the customer nav and cart. */
@@ -20,6 +21,7 @@ export default function SiteShell({
       {!isAdmin && top}
       <main>{children}</main>
       {!isAdmin && bottom}
+      {!isAdmin && <Analytics />}
     </>
   );
 }
