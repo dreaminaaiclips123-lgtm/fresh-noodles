@@ -292,7 +292,7 @@ export const MENU: MenuCategory[] = [
       },
       {
         id: "v-cola",
-        name: "Fi Cola",
+        name: "V Cola",
         description: "Carbonated soft drink.",
         originalPrice: 35,
         price: 35,
@@ -498,13 +498,19 @@ const choicesFrom = (...categoryIds: string[]) =>
     (id) => MENU.find((c) => c.id === id)?.items.map((i) => i.name) ?? []
   );
 
+const COMBO_APPETIZERS = [
+  "Teriyaki Fries",
+  "Chinese Vegetable Spring Roll",
+  ...choicesFrom("pao"),
+];
+
 // What customers pick inside each offer. Built from the menu so renamed or
 // removed dishes stay in step.
 const OFFER_OPTIONS: Record<string, MenuOption[]> = {
   "noodles-combo-offer": [
     { label: "Noodles", choices: choicesFrom("noodles") },
     { label: "Salad", choices: choicesFrom("salad") },
-    { label: "Appetizer", choices: choicesFrom("appetizers", "pao") },
+    { label: "Appetizer", choices: COMBO_APPETIZERS },
     { label: "Drink", choices: choicesFrom("drinks") },
   ],
   "special-combo-offer": [
@@ -514,7 +520,7 @@ const OFFER_OPTIONS: Record<string, MenuOption[]> = {
       choices: ["Steamed Rice", "Fresh Vegetable Noodles", "Shrimp Fried Rice"],
     },
     { label: "Salad", choices: choicesFrom("salad") },
-    { label: "Appetizer", choices: choicesFrom("appetizers", "pao") },
+    { label: "Appetizer", choices: COMBO_APPETIZERS },
     { label: "Drink", choices: choicesFrom("drinks") },
   ],
   "bao-combo-offer": [
