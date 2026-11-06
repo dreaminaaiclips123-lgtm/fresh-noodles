@@ -8,6 +8,8 @@ import { readFileSync, writeFileSync } from "node:fs";
 const TALABAT_URL = "https://www.talabat.com/egypt/restaurant/1000294/fresh-nodles?aid=9290";
 const MENU_FILE = new URL("../lib/menu.ts", import.meta.url);
 // Owner asked (2026-10-14) to match Talabat exactly until further notice; set back to 5 when asked.
+// The staff portal charges the menu price for Talabat orders (app/api/menu), which is only
+// right while this is 0. Give Talabat orders their own price before changing it.
 const EXTRA_PERCENT = 0;
 
 // Talabat item name -> website item id.
