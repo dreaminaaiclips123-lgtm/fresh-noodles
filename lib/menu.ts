@@ -67,7 +67,10 @@ export const MENU: MenuCategory[] = [
           "Sweet & sour chicken dish, served with vegetables and salad.",
         originalPrice: 650,
         price: 455,
-        options: [{ label: "Side", choices: ["Rice", "Noodles"] }],
+        options: [
+          { label: "Side", choices: ["Rice", "Noodles"] },
+          { label: "Salad", choices: ["Side Salad"] },
+        ],
         image: "/menu/sweet-sour-chicken-bundle.jpg",
       },
       {
@@ -517,7 +520,7 @@ const OFFER_OPTIONS: Record<string, MenuOption[]> = {
     { label: "Main course", choices: choicesFrom("main-dishes") },
     {
       label: "Side",
-      choices: ["Steamed Rice", "Fresh Vegetable Noodles", "Shrimp Fried Rice"],
+      choices: ["Steamed Rice", "Fresh Vegetable Noodles"],
     },
     { label: "Salad", choices: choicesFrom("salad") },
     { label: "Appetizer", choices: COMBO_APPETIZERS },
@@ -527,7 +530,11 @@ const OFFER_OPTIONS: Record<string, MenuOption[]> = {
     { label: "Baos", choices: choicesFrom("pao"), pick: 3 },
     { label: "Drink", choices: choicesFrom("drinks") },
   ],
-  "beef-black-pepper-bundle": [{ label: "Drink", choices: choicesFrom("drinks") }],
+  "beef-black-pepper-bundle": [
+    // Included, not a choice: one option shows it as already checked.
+    { label: "Fries", choices: ["Teriyaki Fries"] },
+    { label: "Drink", choices: choicesFrom("drinks") },
+  ],
 };
 
 for (const item of MENU.flatMap((c) => c.items)) {
