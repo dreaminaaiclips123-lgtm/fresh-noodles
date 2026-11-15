@@ -53,6 +53,13 @@ const NAME_TO_ID = {
   "Beef Bulgogi Bao": "beef-bulgogi-bao",
   "Chicken Katsu Bao": "chicken-katsu-bao",
   "Dynamite Shrimp Bao": "dynamite-bao-shrimp",
+  // Talabat renamed these (seen 2026-11-15).
+  "Pao Combo Offer": "bao-combo-offer",
+  "Beef Bulgogi Pao": "beef-bulgogi-bao",
+  "Chicken Katsu Pao": "chicken-katsu-bao",
+  "Dynamite Shrimp Pao": "dynamite-bao-shrimp",
+  "Szechuan Sauce Hot Shrimp": "sichuan-spicy-shrimp",
+  "V cola": "v-cola",
   "Fried Rice with Shrimp": "shrimp-fried-rice",
   "Steamed Rice": "steamed-rice",
   "Korean Chicken Salad": "korean-chicken-salad",
