@@ -431,14 +431,6 @@ export const MENU: MenuCategory[] = [
     title: "Salad",
     items: [
       {
-        id: "thai-beef-salad",
-        name: "Thai Beef Salad",
-        description: "Thai-style salad with marinated beef slices.",
-        originalPrice: 340,
-        price: 238,
-        image: "/menu/thai-beef-salad.jpg",
-      },
-      {
         id: "korean-chicken-salad",
         name: "Korean Chicken Salad",
         description: "Salad with grilled chicken, Korean style.",

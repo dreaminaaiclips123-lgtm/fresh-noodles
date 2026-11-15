@@ -55,7 +55,6 @@ const NAME_TO_ID = {
   "Dynamite Shrimp Bao": "dynamite-bao-shrimp",
   "Fried Rice with Shrimp": "shrimp-fried-rice",
   "Steamed Rice": "steamed-rice",
-  "Thai Beef Salad": "thai-beef-salad",
   "Korean Chicken Salad": "korean-chicken-salad",
   "Korean Kimchi Salad": "korean-kimchi-salad",
   "Spicy Sauce": "spicy-sauce",
@@ -63,6 +62,9 @@ const NAME_TO_ID = {
   "Lauo Japanese Spicy Oil": "japanese-spicy-oil",
   "Teriyaki Sauce": "teriyaki-sauce",
 };
+
+// Talabat items the owner chose not to list on the website (2026-11-15). Skipped, not reported.
+const IGNORED_TALABAT = new Set(["Thai Beef Salad", "Fast Appetizer", "Fast Break"]);
 
 // Shown at full price on the menu; discounted only in the cart.
 const FULL_PRICE_IDS = new Set([
@@ -112,6 +114,7 @@ const matchedIds = new Set();
 const unmapped = [];
 
 for (const [name, t] of talabat) {
+  if (IGNORED_TALABAT.has(name)) continue;
   const id = NAME_TO_ID[name];
   if (!id) {
     unmapped.push({ name, original: t.original, price: t.price });
